@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Devops on Tech&#39;s Blog</title>
+    <link>https://buihien.org/tags/devops/</link>
+    <description>Recent content in Devops on Tech&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language><atom:link href="https://buihien.org/tags/devops/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Sự khác biệt giữa RUN, CMD và ENTRYPOINT trong Dockerfile</title>
+      <link>https://buihien.org/blog/s%E1%BB%B1-kh%C3%A1c-bi%E1%BB%87t-gi%E1%BB%AFa-run-cmd-v%C3%A0-entrypoint-trong-dockerfile/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://buihien.org/blog/s%E1%BB%B1-kh%C3%A1c-bi%E1%BB%87t-gi%E1%BB%AFa-run-cmd-v%C3%A0-entrypoint-trong-dockerfile/</guid>
+      <description>Trong Dockerfile chúng ta thường xuyên bắt gặp các instructions như CMD, RUN, ENTRYPOINT. Thoạt nhìn, chúng đều được sử dụng để chỉ định và thực thi các lệnh ...</description>
+    </item>
+    
+  </channel>
+</rss>

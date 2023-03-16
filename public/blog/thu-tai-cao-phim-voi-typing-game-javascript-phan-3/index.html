@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Thử tài cào phím với Typing Game - Javascript (phần 3) | Tech&#39;s Blog</title>
+<meta name="keywords" content="FrontEnd, Javascript, Web, Game">
+<meta name="description" content="Trong nội dung bài viết hướng dẫn Typing Game (phần 3), mình sẽ tiếp tục làm các chức năng còn lại của Typing game bao gồm ...">
+<meta name="author" content="">
+<link rel="canonical" href="https://buihien.org/blog/thu-tai-cao-phim-voi-typing-game-javascript-phan-3/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.min.a72801f0f40a8d7f71aa1cafd1c2f2a993a1f26ca1cfd38fdba65d5b9b0f08a0.css" integrity="sha256-pygB8PQKjX9xqhyv0cLyqZOh8myhz9OP26ZdW5sPCKA=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.min.b95bacdc39e37a332a9f883b1e78be4abc1fdca2bc1f2641f55e3cd3dabd4d61.js" integrity="sha256-uVus3DnjejMqn4g7Hni&#43;Srwf3KK8HyZB9V4809q9TWE="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://buihien.org/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://buihien.org/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://buihien.org/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://buihien.org/apple-touch-icon.png">
+<link rel="mask-icon" href="https://buihien.org/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="Thử tài cào phím với Typing Game - Javascript (phần 3)" />
+<meta property="og:description" content="Trong nội dung bài viết hướng dẫn Typing Game (phần 3), mình sẽ tiếp tục làm các chức năng còn lại của Typing game bao gồm ..." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://buihien.org/blog/thu-tai-cao-phim-voi-typing-game-javascript-phan-3/" />
+<meta property="og:image" content="https://buihien.org/blog/typing-game/typing-game-3.png" /><meta property="article:section" content="blog" />
+
+
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://buihien.org/blog/typing-game/typing-game-3.png" />
+<meta name="twitter:title" content="Thử tài cào phím với Typing Game - Javascript (phần 3)"/>
+<meta name="twitter:description" content="Trong nội dung bài viết hướng dẫn Typing Game (phần 3), mình sẽ tiếp tục làm các chức năng còn lại của Typing game bao gồm ..."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Blogs",
+      "item": "https://buihien.org/blog/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "Thử tài cào phím với Typing Game - Javascript (phần 3)",
+      "item": "https://buihien.org/blog/thu-tai-cao-phim-voi-typing-game-javascript-phan-3/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Thử tài cào phím với Typing Game - Javascript (phần 3)",
+  "name": "Thử tài cào phím với Typing Game - Javascript (phần 3)",
+  "description": "Trong nội dung bài viết hướng dẫn Typing Game (phần 3), mình sẽ tiếp tục làm các chức năng còn lại của Typing game bao gồm ...",
+  "keywords": [
+    "FrontEnd", "Javascript", "Web", "Game"
+  ],
+  "articleBody": "Chào mọi người, ở bài viết Typing Game (phần 2) mình đã hướng dẫn các bạn các chức năng : Đếm ngược thời gian, xử lý khi người chơi gõ từ, chơi lại game\nKhông biết trong quá trình thực hiện các bạn có gặp lỗi lầm gì không, hãy comment cho mình biết nhé\nTrong nội dung bài viết hướng dẫn Typing Game (phần 3), mình sẽ tiếp tục làm các chức năng còn lại của Typing game bao gồm :\nCập nhật kết quả ngươi chơi Demo chức năng bảng xếp hạng người chơi Ok, Let’s go !! 😁\nCập nhật kết quả ngươi chơi Khi nào chúng ta cập nhật kết quả cho người?\nTất nhiên là khi hết thời gian rồi phải không nào (time = 0). Vậy khi cập nhật kết quả cho người chơi, chúng ta cần hiển thị các thông tin gì\nTừ ảnh trên, chúng ta có thể dễ dàng nhận thấy, các thông tin cần cập nhật bao gồm :\nChỉ số WPM : Số từ gõ mỗi phút Số ký tự gõ đúng Số ký tự gõ sai Tổng số ký tự đã gõ Độ chính xác khi gõ Số từ gõ đúng Số từ gõ sai Rất nhiều thông tin phải không nào, chúng ta phải tự mình tính toán thôi\nfunction countdownTime() { ... if (time == 0) { ... // Cập nhật kết quả người chơi updateInfoPlayer(); } } Trong function countdownTime(), khi time = 0, mình sẽ gọi function updateInfoPlayer() để tiến hành cập nhật kết quả cho người chơi\n// Thông tin người chơi const wordsCorrectEl = document.querySelector('.words-correct'); const wordsWrongEl = document.querySelector('.words-wrong'); const wpmCountEl = document.querySelector('.wps-count'); const characterCorrectCountEl = document.querySelector('.character-correct-count'); const characterWrongCountEl = document.querySelector('.character-wrong-count'); const characterCountEl = document.querySelector('.character-count'); const percentCorrectEl = document.querySelector('.percent-correct'); function updateInfoPlayer() { let spans = document.querySelectorAll('#words span'); let totalCorrectWords = 0; // Tổng số từ gõ đúng let totalWrongWords = 0; // Tổng số từ gõ sai let totalCorrectCharacters = 0; // Tổng số ký tự gõ đúng let totalWrongCharacters = 0; // Tổng số ký tự gõ sai let totalCharacters = 0; // Tổng số ký tự đã gõ for (let i = 0; i \u003c spans.length; i++) { // Đếm số từ và ký tự đúng if (spans[i].classList.contains('correct')) { totalCorrectWords++; totalCorrectCharacters += spans[i].innerText.length; } // Đếm số từ và ký tự sai if (spans[i].classList.contains('wrong')) { totalWrongWords++; totalWrongCharacters += spans[i].innerText.length; } } // Cập nhật số từ đúng - sai wordsCorrectEl.innerText = totalCorrectWords; wordsWrongEl.innerText = totalWrongWords; // Tính toán WPM totalCharacters = totalCorrectCharacters + totalWrongCharacters; wpm = Math.round(totalCharacters / 5 / (wpmTime / 60)); wpmCountEl.innerText = `${wpm} WPM`; // Cập nhật số ký tự đúng - sai characterCorrectCountEl.innerText = totalCorrectCharacters; characterWrongCountEl.innerText = totalWrongCharacters; characterCountEl.innerText = totalCharacters; // Cập nhật phần trăm từ gõ chính xác percentCorrectEl.innerText = `${( (totalCorrectWords * 100) / (totalCorrectWords + totalWrongWords) ).toFixed(2)}%`; } Vì function trên mình cần tính toán rất nhiều thông tin của người chơi nên có hơi dài 1 tí\nĐể tính toán số từ và ký tự đúng, mình sẽ duyệt qua mảng spans, với mỗi vòng lặp mình sẽ kiểm tra xem phần tử span đó có chứa class ‘correct’ hay không. Trường hợp phần tử span đó có chứa class ‘correct’ (tức là từ này đã gõ đúng), mình sẽ tăng totalCorrectWords (Tổng số từ gõ đúng) lên 1 đơn vị, và totalCorrectCharacters (Tổng số ký tự gõ đúng) sẽ được cộng dồn với độ dài của nội dung trong thẻ span đó\nVới từ và ký tự gõ sai mình cũng làm tương tự bằng việc kiểm tra với class ‘wrong’\nTrên mạng có nhiều công thức tính WPM với mức độ phức tạp khác nhau, trong bài viết này, để đơn giản hóa mình đã áp dụng công thức trên\nỞ function updateInfoPlayer() có một đoạn mà các bạn cần chú ý\nwpm = Math.round(totalCharacters / 5 / (wpmTime / 60)); Trong công thức trên mình có sử dụng wpmTime mà không phải là time, bởi vì khi mình cập nhật thông tin người chơi, lúc này time = 0 rồi, nếu mình áp dụng vào công thức trên sẽ cho kết quả là ’’ infinity\"\nNên lúc này mình sẽ tạo ra biến wpmTime = time lúc khởi tạo chúng ta khởi tạo giá trị time ban đầu trong function init()\nlet wpmTime; let wpm function init() { time = 10; wpmTime = time; wpm = 0; // ... } Các bạn có thể chơi thử để xem mức độ cào phím của mình đang ở mức nào nhé\nTốc độ đánh máy thấp: 0-60 WPM Tốc độ đánh máy trung bình: 60-90 WPM Tốc độ đánh máy cao: 90-130 WPM Tốc độ đánh máy chuyên nghiệp: 130-170 WPM Tốc độ của mình ở mức trung bình thôi, đủ để toxic với đồng đội trong các pha combat tổng 5 vs 5 😁\nBảng xếp hạng người chơi Để tăng thêm phần gay cấn mà có làm thêm chức năng bảng xếp hạng người chơi\nGiao diện phần bảng xếp hạng này chúng ta có thể quan sát như sau\nGiao diện trên là mình đã fix cứng code trong mã HTML để các bạn có cái nhìn trực quan cho phần bảng xếp hạng này. Ở đây mình đã ví dụ với 3 người chơi. Chúng ta có thể dễ dàng nhận thấy được, với mỗi người chơi chúng ta cần hiển thị các thông tin gì\nẢnh người chơi Tên người chơi Chỉ số wpm Thời gian chơi (định dạng hh:mm:ss - dd/mm/yyyy) Để linh động cho việc hiện thị, không fix cứng code html và chúng ta có thể thêm bản ghi vào bảng xếp hạng khi người chơi kết thúc lượt chơi. Vì vậy mình đã mockup một mảng ranking để phục vụ cho điều này, mỗi phần tử trong mảng ranking này sẽ đại diện cho thông tin của người chơi\n// Mock up mảng rank let ranking = [ { avatar: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8bmhhJTIwdHJhbmclMjBiZWFjaHxlbnwwfHwwfHw%3D\u0026ixlib=rb-1.2.1\u0026w=1000\u0026q=80', username: 'Nguyen Van A', wpm: 10, time: formatDate(new Date(2021, 3, 27, 11, 33, 30)), }, { avatar: 'https://ec.europa.eu/jrc/sites/jrcsh/files/styles/normal-responsive/public/fotolia-92027264european-day-forest-green-forest.jpg?itok=biCWJPQQ', username: 'Tran Van B', wpm: 500, time: formatDate(new Date(2021, 3, 26, 16, 33, 30)), }, { avatar: 'https://images.unsplash.com/photo-1569389397653-c04fe624e663?ixid=MnwxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHwxfHx8ZW58MHx8fHw%3D\u0026ixlib=rb-1.2.1\u0026auto=format\u0026fit=crop\u0026w=500\u0026q=60', username: 'Phan Thi C', wpm: 151, time: formatDate(new Date(2021, 3, 27, 02, 33, 30)), }, ]; Trong mảng ranking, mình đã mockup thông tin của 3 user, mỗi user bao gồm các thông tin như : avatar, username, wpm, time\nRiêng đối với thuộc tính time, mình có định nghĩa thêm function formatDate() để format time theo chuẩn hh:mm:ss - dd/mm/yyyy\nfunction formatDate(date) { let year = date.getFullYear(); let month = `0${date.getMonth() + 1}`.slice(-2); let day = `0${date.getDate()}`.slice(-2); let hour = `0${date.getHours()}`.slice(-2); let minute = `0${date.getMinutes()}`.slice(-2); let second = `0${date.getSeconds()}`.slice(-2); return `${hour}:${minute}:${second} - ${day}/${month}/${year}`; } Function formatDate() cũng tương tự như covertTime(), để đảm bảo thời gian hiển thị đúng theo định dạng mà mình mong muốn ( hh:mm:ss - dd/mm/yyyy)\nRender bảng xếp hạng const tableEl = document.querySelector('tbody'); // render ranking function renderRanking(arr) { // Sắp xếp thứ tự người chơi theo wpm giảm dần let arrSort = arr.sort(function (a, b) { return b.wpm - a.wpm; }); // Lấy ra danh sách TOP 10 let arrTop10 = arrSort.slice(0, 10) // Render lên giao diện tableEl.innerHTML = ''; for (let i = 0; i \u003c arrTop10.length; i++) { const u = arrTop10[i] tableEl.innerHTML += ` ${i + 1} ${u.username} ${u.wpm} ${u.time} `; } } Để render mảng ranking chúng ta vừa mockup ra ngoài giao diện, mình đã định nghĩa function renderRanking() với tham số truyền vào là mảng arr\nTrong function renderRanking() này mình tiến hành chia làm 3 bước:\nSắp xếp thứ tự người chơi theo wpm giảm dần Lấy ra danh sách TOP 10 Render lên giao diện Với bước 1 và bước 2 không có gì đặc biệt, riêng đối với bước 3 mình tiến hành xử lý như sau:\nĐầu tiên clear hết dữ liệu của table đang fix cứng trong mã html để render dữ liệu từ mảng đã mockup từ trước\ntableEl.innerHTML = ''; Sau đó sử dụng vòng lặp for để duyệt qua các phần tử của mảng arrTop10 (mỗi phần tử của mảng là object chứa thông tin của người chơi)\nVới mỗi vòng lặp, mình sẽ tạo ra một cấu trúc HTML của 1 bản ghi ranking (các bạn có thể copy trong file html ban đầu nhé, toàn bộ thẻ tr trong tbody của table đấy). Sau đó mình chỉ cần chèn các giá trị tương ứng vào thôi, ở đây để chèn giá trị mình sử dụng cú pháp của template string trong ES6 (${}) nhưng các bạn nên nhớ phải đặt trong dấu backtick nhé (``) chứ không phải dấu nháy kép đâu.\nSau khi định nghĩa xong function renderRanking() mình sẽ tiến hành gọi nó trong function init()\nfunction init() { // ... // Render bảng xếp hạng người chơi renderRanking(ranking); } Kết quả sau khi mockup và hiển thị bảng xếp hạng\nThật tuyệt phải không nào 😁\nThêm người chơi vào bảng xếp hạng function countdownTime() { // ... if (time == 0) { // ... addPlayerToRanking(); } } Khi time = 0, mình sẽ gọi function addPlayerToRanking() để thêm bản ghi của người chơi vào bảng xếp hạng\nfunction addPlayerToRanking() { // Tạo 1 bản ghi người chơi let player = { avatar: 'https://images.unsplash.com/photo-1564564321837-a57b7070ac4f?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8bWFufGVufDB8fDB8fA%3D%3D\u0026ixlib=rb-1.2.1\u0026auto=format\u0026fit=crop\u0026w=500\u0026q=60', username: 'Bùi Hiên', wpm: wpm, time: formatDate(new Date()), } // Thêm bản ghi vào mảng ranking ranking.push(player) // Render lại bảng xếp hạng sau khi thêm bản ghi mới renderRanking(ranking) } Vì hiện tại trong game chưa có cơ chế đăng nhập ở biết người chơi hiện tại là ai? Nên ở đây mình có tạo ra biến player chưa thông tin người chơi vừa kết thúc lượt chơi của mình\nTrong player có 2 thông tin mà mình đăng fix cứng là avatar và username, còn wpm là kết quả của người chơi trong lần chơi đó, và time là thời gian sau khi lượt chơi kết thúc\nTiếp theo chúng ta sẽ thêm bản ghi player vào mảng ranking\nVà cuối cùng là gọi renderRanking(ranking) để render lại bảng xếp hạng sau khi thêm bản ghi mới\nKết quả sau 1 số lượt chơi của mình như sau\nSource code của phần này mình để ở đây nhé : https://github.com/buihien0109/typing-game-javascript/tree/master/typing-part-3\nCác bạn có thể tham khảo thêm khóa học này nhé:\nJavascript căn bản - Tổng hợp 12 game huyền thoại - tại đây. Khóa học Web Frontend (HTML, CSS, JavaScript) + ReactJs - tại đây ",
+  "wordCount" : "1774",
+  "inLanguage": "en",
+  "image":"https://buihien.org/blog/typing-game/typing-game-3.png","datePublished": "0001-01-01T00:00:00Z",
+  "dateModified": "0001-01-01T00:00:00Z",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://buihien.org/blog/thu-tai-cao-phim-voi-typing-game-javascript-phan-3/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Tech's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://buihien.org/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header sticky-header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://buihien.org" accesskey="h" title="Tech&#39;s Blog (Alt + H)">Tech&#39;s Blog</a>
+            <span class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </span>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://buihien.org/" title="Home">
+                    <span>Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://buihien.org/blog" title="Blog">
+                    <span>Blog</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://buihien.org/tags" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://buihien.org/search" title="Search (Alt &#43; /)" accesskey=/>
+                    <span>Search</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://buihien.org">Home</a>&nbsp;»&nbsp;<a href="https://buihien.org/blog/">Blogs</a></div>
+    <h1 class="post-title">
+      Thử tài cào phím với Typing Game - Javascript (phần 3)
+    </h1>
+    <div class="post-description">
+      Trong nội dung bài viết hướng dẫn Typing Game (phần 3), mình sẽ tiếp tục làm các chức năng còn lại của Typing game bao gồm ...
+    </div>
+    <div class="post-meta">
+
+
+26/12/2022
+
+</div>
+  </header> 
+<figure class="entry-cover"><img loading="lazy" src="https://buihien.org/blog/typing-game/typing-game-3.png" alt="">
+        
+</figure><div class="toc">
+    <details >
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">‎ Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#c%e1%ba%adp-nh%e1%ba%adt-k%e1%ba%bft-qu%e1%ba%a3-ng%c6%b0%c6%a1i-ch%c6%a1i" aria-label="Cập nhật kết quả ngươi chơi">Cập nhật kết quả ngươi chơi</a></li>
+                <li>
+                    <a href="#b%e1%ba%a3ng-x%e1%ba%bfp-h%e1%ba%a1ng-ng%c6%b0%e1%bb%9di-ch%c6%a1i" aria-label="Bảng xếp hạng người chơi">Bảng xếp hạng người chơi</a></li>
+                <li>
+                    <a href="#render-b%e1%ba%a3ng-x%e1%ba%bfp-h%e1%ba%a1ng" aria-label="Render bảng xếp hạng">Render bảng xếp hạng</a></li>
+                <li>
+                    <a href="#th%c3%aam-ng%c6%b0%e1%bb%9di-ch%c6%a1i-v%c3%a0o-b%e1%ba%a3ng-x%e1%ba%bfp-h%e1%ba%a1ng" aria-label="Thêm người chơi vào bảng xếp hạng">Thêm người chơi vào bảng xếp hạng</a>
+                </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><p>Chào mọi người, ở bài viết <a href="https://techmaster.vn/posts/36506/thu-tai-cao-phim-voi-typing-game-javascript-phan-2">Typing Game (phần 2)</a> mình đã hướng dẫn các bạn các chức năng : Đếm ngược thời gian, xử lý khi người chơi gõ từ, chơi lại game</p>
+<blockquote>
+<p>Không biết trong quá trình thực hiện các bạn có gặp lỗi lầm gì không, hãy comment cho mình biết nhé</p>
+</blockquote>
+<p>Trong nội dung bài viết hướng dẫn Typing Game (phần 3), mình sẽ tiếp tục làm các chức năng còn lại của Typing game bao gồm :</p>
+<ul>
+<li>Cập nhật kết quả ngươi chơi</li>
+<li>Demo chức năng bảng xếp hạng người chơi</li>
+</ul>
+<p><strong>Ok, Let&rsquo;s go !!</strong> 😁</p>
+<h2 id="cập-nhật-kết-quả-ngươi-chơi">Cập nhật kết quả ngươi chơi<a hidden class="anchor" aria-hidden="true" href="#cập-nhật-kết-quả-ngươi-chơi">#</a></h2>
+<p>Khi nào chúng ta cập nhật kết quả cho người?</p>
+<p>Tất nhiên là khi hết thời gian rồi phải không nào (time = 0). Vậy khi cập nhật kết quả cho người chơi, chúng ta cần hiển thị các thông tin gì</p>
+<p><img loading="lazy" src="https://media.techmaster.vn/api/static/9479/c2n6v9c51co7q82829l0" alt="thông tin người chơi"  />
+</p>
+<p>Từ ảnh trên, chúng ta có thể dễ dàng nhận thấy, các thông tin cần cập nhật bao gồm :</p>
+<ul>
+<li>Chỉ số WPM : Số từ gõ mỗi phút</li>
+<li>Số ký tự gõ đúng</li>
+<li>Số ký tự gõ sai</li>
+<li>Tổng số ký tự đã gõ</li>
+<li>Độ chính xác khi gõ</li>
+<li>Số từ gõ đúng</li>
+<li>Số từ gõ sai</li>
+</ul>
+<p>Rất nhiều thông tin phải không nào, chúng ta phải tự mình tính toán thôi</p>
+<pre tabindex="0"><code class="language-lang-javascript" data-lang="lang-javascript">function countdownTime() {
+   ...
+
+    if (time == 0) {
+        ...
+
+        // Cập nhật kết quả người chơi
+        updateInfoPlayer();
+    }
+}
+</code></pre><p>Trong function <strong>countdownTime()</strong>, khi <strong>time = 0</strong>, mình sẽ gọi function <strong>updateInfoPlayer()</strong> để tiến hành cập nhật kết quả cho người chơi</p>
+<pre tabindex="0"><code class="language-lang-javascript" data-lang="lang-javascript">// Thông tin người chơi
+const wordsCorrectEl = document.querySelector(&#39;.words-correct&#39;);
+const wordsWrongEl = document.querySelector(&#39;.words-wrong&#39;);
+const wpmCountEl = document.querySelector(&#39;.wps-count&#39;);
+const characterCorrectCountEl = document.querySelector(&#39;.character-correct-count&#39;);
+const characterWrongCountEl = document.querySelector(&#39;.character-wrong-count&#39;);
+const characterCountEl = document.querySelector(&#39;.character-count&#39;);
+const percentCorrectEl = document.querySelector(&#39;.percent-correct&#39;);
+
+function updateInfoPlayer() {
+    let spans = document.querySelectorAll(&#39;#words span&#39;);
+
+    let totalCorrectWords = 0; // Tổng số từ gõ đúng
+    let totalWrongWords = 0; // Tổng số từ gõ sai
+    let totalCorrectCharacters = 0; // Tổng số ký tự gõ đúng
+    let totalWrongCharacters = 0; // Tổng số ký tự gõ sai
+    let totalCharacters = 0; // Tổng số ký tự đã gõ
+
+    for (let i = 0; i &lt; spans.length; i++) {
+        // Đếm số từ và ký tự đúng
+        if (spans[i].classList.contains(&#39;correct&#39;)) {
+            totalCorrectWords++;
+            totalCorrectCharacters += spans[i].innerText.length;
+        }
+        // Đếm số từ và ký tự sai
+        if (spans[i].classList.contains(&#39;wrong&#39;)) {
+            totalWrongWords++;
+            totalWrongCharacters += spans[i].innerText.length;
+        }
+    }
+    // Cập nhật số từ đúng - sai
+    wordsCorrectEl.innerText = totalCorrectWords;
+    wordsWrongEl.innerText = totalWrongWords;
+
+    // Tính toán WPM
+    totalCharacters = totalCorrectCharacters + totalWrongCharacters;
+    wpm = Math.round(totalCharacters / 5 / (wpmTime / 60));
+    wpmCountEl.innerText = `${wpm} WPM`;
+
+    // Cập nhật số ký tự đúng - sai
+    characterCorrectCountEl.innerText = totalCorrectCharacters;
+    characterWrongCountEl.innerText = totalWrongCharacters;
+    characterCountEl.innerText = totalCharacters;
+
+    // Cập nhật phần trăm từ gõ chính xác
+    percentCorrectEl.innerText = `${(
+        (totalCorrectWords * 100) /
+        (totalCorrectWords + totalWrongWords)
+    ).toFixed(2)}%`;
+}
+</code></pre><p>Vì function trên mình cần tính toán rất nhiều thông tin của người chơi nên có hơi dài 1 tí</p>
+<p>Để tính toán số từ và ký tự đúng, mình sẽ duyệt qua mảng <strong>spans</strong>, với mỗi vòng lặp mình sẽ kiểm tra xem phần tử span đó có chứa class <strong>&lsquo;correct&rsquo;</strong> hay không. Trường hợp phần tử span đó có chứa class <strong>&lsquo;correct&rsquo;</strong> (tức là từ này đã gõ đúng), mình sẽ tăng <strong>totalCorrectWords (Tổng số từ gõ đúng)</strong> lên 1 đơn vị, và <strong>totalCorrectCharacters (Tổng số ký tự gõ đúng)</strong> sẽ được cộng dồn với độ dài của nội dung trong thẻ span đó</p>
+<p>Với từ và ký tự gõ sai mình cũng làm tương tự bằng việc kiểm tra với class <strong>&lsquo;wrong&rsquo;</strong></p>
+<p><img loading="lazy" src="https://media.techmaster.vn/api/static/9479/c2n756s51co7q82829lg" alt="Công thức tính wpm"  />
+</p>
+<p>Trên mạng có nhiều công thức tính WPM với mức độ phức tạp khác nhau, trong bài viết này, để đơn giản hóa mình đã áp dụng công thức trên</p>
+<p>Ở function <strong>updateInfoPlayer()</strong> có một đoạn mà các bạn cần chú ý</p>
+<pre tabindex="0"><code class="language-lang-javascript" data-lang="lang-javascript">wpm = Math.round(totalCharacters / 5 / (wpmTime / 60));
+</code></pre><p>Trong công thức trên mình có sử dụng <strong>wpmTime</strong> mà không phải là <strong>time</strong>, bởi vì khi mình cập nhật thông tin người chơi, lúc này <strong>time = 0</strong> rồi, nếu mình áp dụng vào công thức trên sẽ cho kết quả là &rsquo;&rsquo; <strong>infinity</strong>&quot;</p>
+<p>Nên lúc này mình sẽ tạo ra biến <strong>wpmTime = time</strong> lúc khởi tạo chúng ta khởi tạo giá trị <strong>time</strong> ban đầu trong function <strong>init()</strong></p>
+<pre tabindex="0"><code class="language-lang-javascript" data-lang="lang-javascript">let wpmTime;
+let wpm
+function init() {
+    time = 10;
+    wpmTime = time;
+    wpm = 0;
+
+    // ...
+}
+</code></pre><p>Các bạn có thể chơi thử để xem mức độ cào phím của mình đang ở mức nào nhé</p>
+<ul>
+<li>Tốc độ đánh máy thấp: 0-60 WPM</li>
+<li>Tốc độ đánh máy trung bình: 60-90 WPM</li>
+<li>Tốc độ đánh máy cao: 90-130 WPM</li>
+<li>Tốc độ đánh máy chuyên nghiệp: 130-170 WPM</li>
+</ul>
+<blockquote>
+<p>Tốc độ của mình ở mức trung bình thôi, đủ để toxic với đồng đội trong các pha combat tổng 5 vs 5 😁</p>
+</blockquote>
+<h2 id="bảng-xếp-hạng-người-chơi">Bảng xếp hạng người chơi<a hidden class="anchor" aria-hidden="true" href="#bảng-xếp-hạng-người-chơi">#</a></h2>
+<p>Để tăng thêm phần gay cấn mà có làm thêm chức năng bảng xếp hạng người chơi</p>
+<p>Giao diện phần bảng xếp hạng này chúng ta có thể quan sát như sau</p>
+<p><img loading="lazy" src="https://media.techmaster.vn/api/static/9479/c2n7us451co7q82829mg" alt="bảng xếp hạng người chơi"  />
+</p>
+<p>Giao diện trên là mình đã fix cứng code trong mã HTML để các bạn có cái nhìn trực quan cho phần bảng xếp hạng này. Ở đây mình đã ví dụ với 3 người chơi. Chúng ta có thể dễ dàng nhận thấy được, với mỗi người chơi chúng ta cần hiển thị các thông tin gì</p>
+<ul>
+<li>Ảnh người chơi</li>
+<li>Tên người chơi</li>
+<li>Chỉ số wpm</li>
+<li>Thời gian chơi (định dạng <strong>hh:mm:ss - dd/mm/yyyy</strong>)</li>
+</ul>
+<p>Để linh động cho việc hiện thị, không fix cứng code html và chúng ta có thể thêm bản ghi vào bảng xếp hạng khi người chơi kết thúc lượt chơi. Vì vậy mình đã mockup một mảng <strong>ranking</strong> để phục vụ cho điều này, mỗi phần tử trong mảng <strong>ranking</strong> này sẽ đại diện cho thông tin của người chơi</p>
+<pre tabindex="0"><code class="language-lang-javascript" data-lang="lang-javascript">// Mock up mảng rank
+let ranking = [
+    {
+        avatar: &#39;https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8bmhhJTIwdHJhbmclMjBiZWFjaHxlbnwwfHwwfHw%3D&amp;ixlib=rb-1.2.1&amp;w=1000&amp;q=80&#39;,
+        username: &#39;Nguyen Van A&#39;,
+        wpm: 10,
+        time: formatDate(new Date(2021, 3, 27, 11, 33, 30)),
+    },
+    {
+        avatar: &#39;https://ec.europa.eu/jrc/sites/jrcsh/files/styles/normal-responsive/public/fotolia-92027264european-day-forest-green-forest.jpg?itok=biCWJPQQ&#39;,
+        username: &#39;Tran Van B&#39;,
+        wpm: 500,
+        time: formatDate(new Date(2021, 3, 26, 16, 33, 30)),
+    },
+    {
+        avatar: &#39;https://images.unsplash.com/photo-1569389397653-c04fe624e663?ixid=MnwxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHwxfHx8ZW58MHx8fHw%3D&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=500&amp;q=60&#39;,
+        username: &#39;Phan Thi C&#39;,
+        wpm: 151,
+        time: formatDate(new Date(2021, 3, 27, 02, 33, 30)),
+    },
+];
+</code></pre><p>Trong mảng ranking, mình đã mockup thông tin của 3 user, mỗi user bao gồm các thông tin như : <strong>avatar, username, wpm, time</strong></p>
+<p>Riêng đối với thuộc tính <strong>time</strong>, mình có định nghĩa thêm function <strong>formatDate()</strong> để format time theo chuẩn <strong>hh:mm:ss - dd/mm/yyyy</strong></p>
+<pre tabindex="0"><code class="language-lang-javascript" data-lang="lang-javascript">function formatDate(date) {
+    let year = date.getFullYear();
+    let month = `0${date.getMonth() + 1}`.slice(-2);
+    let day = `0${date.getDate()}`.slice(-2);
+
+    let hour = `0${date.getHours()}`.slice(-2);
+    let minute = `0${date.getMinutes()}`.slice(-2);
+    let second = `0${date.getSeconds()}`.slice(-2);
+
+    return `${hour}:${minute}:${second} - ${day}/${month}/${year}`;
+}
+</code></pre><p>Function <strong>formatDate()</strong> cũng tương tự như <strong>covertTime()</strong>, để đảm bảo thời gian hiển thị đúng theo định dạng mà mình mong muốn ( <strong>hh:mm:ss - dd/mm/yyyy</strong>)</p>
+<h2 id="render-bảng-xếp-hạng">Render bảng xếp hạng<a hidden class="anchor" aria-hidden="true" href="#render-bảng-xếp-hạng">#</a></h2>
+<pre tabindex="0"><code class="language-lang-javascript" data-lang="lang-javascript">const tableEl = document.querySelector(&#39;tbody&#39;);
+
+// render ranking
+function renderRanking(arr) {
+    // Sắp xếp thứ tự người chơi theo wpm giảm dần
+    let arrSort = arr.sort(function (a, b) {
+        return b.wpm - a.wpm;
+    });
+
+    // Lấy ra danh sách TOP 10
+    let arrTop10 = arrSort.slice(0, 10)
+
+    // Render lên giao diện
+    tableEl.innerHTML = &#39;&#39;;
+    for (let i = 0; i &lt; arrTop10.length; i++) {
+        const u = arrTop10[i]
+        tableEl.innerHTML += `
+            &lt;tr&gt;
+                &lt;td&gt;${i + 1}&lt;/td&gt;
+                &lt;td&gt;
+                    &lt;img src=${u.avatar} alt=&#34;${u.username}&#34;&gt;
+                &lt;/td&gt;
+                &lt;td&gt;${u.username}&lt;/td&gt;
+                &lt;td class=&#34;font-weight-bold&#34;&gt;${u.wpm}&lt;/td&gt;
+                &lt;td class=&#34;font-italic&#34;&gt;${u.time}&lt;/td&gt;
+            &lt;/tr&gt;
+        `;
+    }
+}
+</code></pre><p>Để render mảng ranking chúng ta vừa mockup ra ngoài giao diện, mình đã định nghĩa function <strong>renderRanking()</strong> với tham số truyền vào là mảng <strong>arr</strong></p>
+<p>Trong function <strong>renderRanking()</strong> này mình tiến hành chia làm 3 bước:</p>
+<ul>
+<li>Sắp xếp thứ tự người chơi theo wpm giảm dần</li>
+<li>Lấy ra danh sách TOP 10</li>
+<li>Render lên giao diện</li>
+</ul>
+<p>Với bước 1 và bước 2 không có gì đặc biệt, riêng đối với bước 3 mình tiến hành xử lý như sau:</p>
+<p>Đầu tiên clear hết dữ liệu của table đang fix cứng trong mã html để render dữ liệu từ mảng đã mockup từ trước</p>
+<pre tabindex="0"><code class="language-lang-javascript" data-lang="lang-javascript">tableEl.innerHTML = &#39;&#39;;
+</code></pre><p>Sau đó sử dụng vòng lặp <strong>for</strong> để duyệt qua các phần tử của mảng <strong>arrTop10</strong> (mỗi phần tử của mảng là object chứa thông tin của người chơi)</p>
+<p>Với mỗi vòng lặp, mình sẽ tạo ra một cấu trúc HTML của 1 bản ghi ranking (các bạn có thể copy trong file html ban đầu nhé, toàn bộ thẻ <strong>tr</strong> trong <strong>tbody</strong> của table đấy). Sau đó mình chỉ cần chèn các giá trị tương ứng vào thôi, ở đây để chèn giá trị mình sử dụng cú pháp của <strong>template string</strong> trong ES6 (${}) nhưng các bạn nên nhớ phải đặt trong dấu <strong>backtick</strong> nhé (``) chứ không phải dấu nháy kép đâu.</p>
+<p>Sau khi định nghĩa xong function <strong>renderRanking()</strong> mình sẽ tiến hành gọi nó trong function <strong>init()</strong></p>
+<pre tabindex="0"><code class="language-lang-javascript" data-lang="lang-javascript">function init() {
+    // ...
+
+    // Render bảng xếp hạng người chơi
+    renderRanking(ranking);
+}
+</code></pre><p>Kết quả sau khi mockup và hiển thị bảng xếp hạng</p>
+<p><img loading="lazy" src="https://media.techmaster.vn/api/static/9479/c2ni9hc51co7q82829o0" alt="Kết quả sau khi mockup và hiển thị bảng xếp hạng"  />
+</p>
+<p>Thật tuyệt phải không nào 😁</p>
+<h2 id="thêm-người-chơi-vào-bảng-xếp-hạng">Thêm người chơi vào bảng xếp hạng<a hidden class="anchor" aria-hidden="true" href="#thêm-người-chơi-vào-bảng-xếp-hạng">#</a></h2>
+<pre tabindex="0"><code class="language-lang-javascript" data-lang="lang-javascript">function countdownTime() {
+    // ...
+    if (time == 0) {
+        // ...
+
+        addPlayerToRanking();
+    }
+}
+</code></pre><p>Khi <strong>time = 0</strong>, mình sẽ gọi function <strong>addPlayerToRanking()</strong> để thêm bản ghi của người chơi vào bảng xếp hạng</p>
+<pre tabindex="0"><code class="language-lang-javascript" data-lang="lang-javascript">function addPlayerToRanking() {
+    // Tạo 1 bản ghi người chơi
+    let player = {
+        avatar: &#39;https://images.unsplash.com/photo-1564564321837-a57b7070ac4f?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8bWFufGVufDB8fDB8fA%3D%3D&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=500&amp;q=60&#39;,
+        username: &#39;Bùi Hiên&#39;,
+        wpm: wpm,
+        time: formatDate(new Date()),
+    }
+
+    // Thêm bản ghi vào mảng ranking
+    ranking.push(player)
+
+    // Render lại bảng xếp hạng sau khi thêm bản ghi mới
+    renderRanking(ranking)
+}
+</code></pre><p>Vì hiện tại trong game chưa có cơ chế đăng nhập ở biết người chơi hiện tại là ai? Nên ở đây mình có tạo ra biến <strong>player</strong> chưa thông tin người chơi vừa kết thúc lượt chơi của mình</p>
+<p>Trong <strong>player</strong> có 2 thông tin mà mình đăng fix cứng là <strong>avatar</strong> và <strong>username</strong>, còn <strong>wpm</strong> là kết quả của người chơi trong lần chơi đó, và <strong>time</strong> là thời gian sau khi lượt chơi kết thúc</p>
+<p>Tiếp theo chúng ta sẽ thêm bản ghi <strong>player</strong> vào mảng <strong>ranking</strong></p>
+<p>Và cuối cùng là gọi <strong>renderRanking(ranking)</strong> để render lại bảng xếp hạng sau khi thêm bản ghi mới</p>
+<p>Kết quả sau 1 số lượt chơi của mình như sau</p>
+<p><img loading="lazy" src="https://media.techmaster.vn/api/static/9479/c2ni8gk51co7q82829ng" alt="kết quả sau một số lượt chơi game"  />
+</p>
+<hr>
+<p>Source code của phần này mình để ở đây nhé : <a href="https://github.com/buihien0109/typing-game-javascript/tree/master/typing-part-3">https://github.com/buihien0109/typing-game-javascript/tree/master/typing-part-3</a></p>
+<p>Các bạn có thể tham khảo thêm khóa học này nhé:</p>
+<ul>
+<li>Javascript căn bản - Tổng hợp 12 game huyền thoại - <a href="https://techmaster.vn/khoa-hoc/ev5/javascript-can-ban-tong-hop-12-game-huyen-thoai">tại đây</a>.</li>
+<li>Khóa học Web Frontend (HTML, CSS, JavaScript) + ReactJs - <a href="https://techmaster.vn/lo-trinh/front-end">tại đây</a></li>
+</ul>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://buihien.org/tags/frontend/">FrontEnd</a></li>
+      <li><a href="https://buihien.org/tags/javascript/">Javascript</a></li>
+      <li><a href="https://buihien.org/tags/web/">Web</a></li>
+      <li><a href="https://buihien.org/tags/game/">Game</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2023 <a href="https://buihien.org">Tech&#39;s Blog</a></span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

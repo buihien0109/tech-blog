@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Làm dự án Shopping Cart với Javascript (phần 1) | Tech&#39;s Blog</title>
+<meta name="keywords" content="FrontEnd, Javascript, Web">
+<meta name="description" content="Chào các bạn, hôm nay mình sẽ hướng dẫn các bạn tạo một trang shopping cart đơn giản bằng JS, HTML và CSS. Mình không sử dụng bất kì thư viện và framework nào để code giao diện cũng như các chức năng của shopping cart.">
+<meta name="author" content="">
+<link rel="canonical" href="https://buihien.org/blog/lam-du-an-shopping-cart-voi-javascript-phan-1/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.min.a72801f0f40a8d7f71aa1cafd1c2f2a993a1f26ca1cfd38fdba65d5b9b0f08a0.css" integrity="sha256-pygB8PQKjX9xqhyv0cLyqZOh8myhz9OP26ZdW5sPCKA=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.min.b95bacdc39e37a332a9f883b1e78be4abc1fdca2bc1f2641f55e3cd3dabd4d61.js" integrity="sha256-uVus3DnjejMqn4g7Hni&#43;Srwf3KK8HyZB9V4809q9TWE="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://buihien.org/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://buihien.org/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://buihien.org/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://buihien.org/apple-touch-icon.png">
+<link rel="mask-icon" href="https://buihien.org/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="Làm dự án Shopping Cart với Javascript (phần 1)" />
+<meta property="og:description" content="Chào các bạn, hôm nay mình sẽ hướng dẫn các bạn tạo một trang shopping cart đơn giản bằng JS, HTML và CSS. Mình không sử dụng bất kì thư viện và framework nào để code giao diện cũng như các chức năng của shopping cart." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://buihien.org/blog/lam-du-an-shopping-cart-voi-javascript-phan-1/" />
+<meta property="og:image" content="https://buihien.org/blog/shopping-cart/shopping-cart-1.png" /><meta property="article:section" content="blog" />
+
+
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://buihien.org/blog/shopping-cart/shopping-cart-1.png" />
+<meta name="twitter:title" content="Làm dự án Shopping Cart với Javascript (phần 1)"/>
+<meta name="twitter:description" content="Chào các bạn, hôm nay mình sẽ hướng dẫn các bạn tạo một trang shopping cart đơn giản bằng JS, HTML và CSS. Mình không sử dụng bất kì thư viện và framework nào để code giao diện cũng như các chức năng của shopping cart."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Blogs",
+      "item": "https://buihien.org/blog/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "Làm dự án Shopping Cart với Javascript (phần 1)",
+      "item": "https://buihien.org/blog/lam-du-an-shopping-cart-voi-javascript-phan-1/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Làm dự án Shopping Cart với Javascript (phần 1)",
+  "name": "Làm dự án Shopping Cart với Javascript (phần 1)",
+  "description": "Chào các bạn, hôm nay mình sẽ hướng dẫn các bạn tạo một trang shopping cart đơn giản bằng JS, HTML và CSS. Mình không sử dụng bất kì thư viện và framework nào để code giao diện cũng như các chức năng của shopping cart.",
+  "keywords": [
+    "FrontEnd", "Javascript", "Web"
+  ],
+  "articleBody": "Chào các bạn, hôm nay mình sẽ hướng dẫn các bạn tạo một trang shopping cart đơn giản bằng JS, HTML và CSS. Mình không sử dụng bất kì thư viện và framework nào để code giao diện cũng như các chức năng của shopping cart.\nTrong bài viết này mình sẽ hướng dẫn các bạn một số chức năng trong giỏ hàng như sau :\nRender danh sách sản phẩm từ 1 data có sẵn Cập nhật số lượng sản phẩm hiện có trong giỏ hàng Xóa sản phẩm khỏi giỏ hàng Thay đổi số lượng sản phẩm Cập nhật tổng tiền Áp dụng mã giảm giá Đây là giao diện giỏ hàng ban đầu của chúng ta\nSource code HTML, CSS mình để ở đây, các bạn có thể tham khảo nhé =))\nĐể linh động số lượng sản phẩm sẽ hiển thị trong giỏ hàng thì mình sẽ mockup một danh sách số lượng sản phẩm, mỗi sản phẩm ở đây sẽ là một đối tượng bao gồm các thuộc tính như : id, tên sản phẩm, mô tả của sản phẩm, giá sản phẩm, hình ảnh và số lượng của từng sản phẩm ở trong giỏ hàng\n// Random id ngẫu nhiên trong khoảng 0 -\u003e 100000 function randomId() { return Math.floor(Math.random() * 100000); } // Danh sách sản phẩm let products = [ { id: randomId(), name: 'Áo kiểu nữ cam đất phối cổ trắng dập ly', description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quae, velit.', price: 250000, image: 'https://image.yes24.vn/Upload/ProductImage/anhduong201605/1947415_L.jpg?width=550\u0026height=550', count: 1, }, { id: randomId(), name: 'Áo trắng bèo lé đen tay loe dễ thương', description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quae, velit.', price: 350000, image: 'https://image.yes24.vn/Upload/ProductImage/anhduong201605/1914666_L.jpg?width=550\u0026height=550', count: 1, }, ]; Bên trên mình đã mockup 1 mảng bảo gồm 2 sản phẩm và lưu chúng trong biến products\nNgoài ra mình có định nghĩa function randomId() để random ngẫu nhiên Id cho từng sản phẩm\nSau khi định nghĩa xong mảng các sản phẩm hiện có, bước tiếp theo mình sẽ hiển thị nó ra ngoài giao diện\nRender sản phẩm ra ngoài giao diện Để render sản phẩm mình sẽ định nghĩa function renderUI()\nlet productsEle = document.querySelector('.products'); function renderUI(arr) { // Code xử lý } Trong function renderUI mình sẽ truyền vào 1 mảng, dựa vào mảng này chúng ta sẽ render từng thành phần tương ứng, còn productsEle chính là nơi chúng ta sẽ render từng sản phẩm vào đó.\nfunction renderUI(arr) { productsEle.innerHTML = ''; if (arr.length == 0) { productsEle.insertAdjacentHTML( 'afterbegin', 'Không có sản phẩm nào trong giỏ hàng' ); document.querySelector('.option-container').style.display = 'none'; return; } } Trước khi bắt đầu render, chúng ta sẽ clear hết tất cả nội dung ở trong phần tử productsEle bởi vì trong giao diện ban đầu, mình có fix cứng 2 sản phẩm bằng mã HTML để mọi người tiện theo dõi, nhưng bây giờ chúng ta đã có 1 danh sách sản phẩm vừa mockup, điều này không cần thiết nữa\nTiếp theo mình sẽ kiểm tra thêm trường hợp arr truyền vào có rỗng hay không, nếu mảng ban đầu là rỗng, tức là không có sản phẩm nào trong giỏ hàng, lúc này chúng ta sẽ hiển thị một message lên trên giao diện với nội dung “Không có sản phẩm nào trong giỏ hàng” để thông báo cho người dùng.\nĐồng thời chúng ta cũng ẩn thành phần \".option-container\" đi, vì đây là nơi hiển thị mã code giảm giá và tổng tiền đơn hàng, khi không có sản phẩm nào trong giỏ hàng thì những thành phần này không cần thiết phải hiển thị lên\nTrường hợp mảng arr có dữ liệu lúc này chúng ta sẽ tiếp tục xử lý như sau :\nfunction renderUI(arr) { // ... for (let i = 0; i \u003c arr.length; i++) { const p = arr[i]; productsEle.innerHTML += ` ",
+  "wordCount" : "1575",
+  "inLanguage": "en",
+  "image":"https://buihien.org/blog/shopping-cart/shopping-cart-1.png","datePublished": "0001-01-01T00:00:00Z",
+  "dateModified": "0001-01-01T00:00:00Z",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://buihien.org/blog/lam-du-an-shopping-cart-voi-javascript-phan-1/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Tech's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://buihien.org/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header sticky-header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://buihien.org" accesskey="h" title="Tech&#39;s Blog (Alt + H)">Tech&#39;s Blog</a>
+            <span class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </span>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://buihien.org/" title="Home">
+                    <span>Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://buihien.org/blog" title="Blog">
+                    <span>Blog</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://buihien.org/tags" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://buihien.org/search" title="Search (Alt &#43; /)" accesskey=/>
+                    <span>Search</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://buihien.org">Home</a>&nbsp;»&nbsp;<a href="https://buihien.org/blog/">Blogs</a></div>
+    <h1 class="post-title">
+      Làm dự án Shopping Cart với Javascript (phần 1)
+    </h1>
+    <div class="post-description">
+      Chào các bạn, hôm nay mình sẽ hướng dẫn các bạn tạo một trang shopping cart đơn giản bằng JS, HTML và CSS. Mình không sử dụng bất kì thư viện và framework nào để code giao diện cũng như các chức năng của shopping cart.
+    </div>
+    <div class="post-meta">
+
+
+22/12/2022
+
+</div>
+  </header> 
+<figure class="entry-cover"><img loading="lazy" src="https://buihien.org/blog/shopping-cart/shopping-cart-1.png" alt="">
+        
+</figure><div class="toc">
+    <details >
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">‎ Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#render-s%e1%ba%a3n-ph%e1%ba%a9m-ra-ngo%c3%a0i-giao-di%e1%bb%87n" aria-label="Render sản phẩm ra ngoài giao diện">Render sản phẩm ra ngoài giao diện</a></li>
+                <li>
+                    <a href="#c%e1%ba%adp-nh%e1%ba%adt-s%e1%bb%91-l%c6%b0%e1%bb%a3ng-s%e1%ba%a3n-ph%e1%ba%a9m-trong-gi%e1%bb%8f-h%c3%a0ng" aria-label="Cập nhật số lượng sản phẩm trong giỏ hàng">Cập nhật số lượng sản phẩm trong giỏ hàng</a></li>
+                <li>
+                    <a href="#x%c3%b3a-s%e1%ba%a3n-ph%e1%ba%a9m-trong-gi%e1%bb%8f-h%c3%a0ng" aria-label="Xóa sản phẩm trong giỏ hàng">Xóa sản phẩm trong giỏ hàng</a>
+                </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><p>Chào các bạn, hôm nay mình sẽ hướng dẫn các bạn tạo một trang shopping cart đơn giản bằng JS, HTML và CSS. Mình không sử dụng bất kì thư viện và framework nào để code giao diện cũng như các chức năng của shopping cart.</p>
+<p>Trong bài viết này mình sẽ hướng dẫn các bạn một số chức năng trong giỏ hàng như sau :</p>
+<ul>
+<li>Render danh sách sản phẩm từ 1 data có sẵn</li>
+<li>Cập nhật số lượng sản phẩm hiện có trong giỏ hàng</li>
+<li>Xóa sản phẩm khỏi giỏ hàng</li>
+<li>Thay đổi số lượng sản phẩm</li>
+<li>Cập nhật tổng tiền</li>
+<li>Áp dụng mã giảm giá</li>
+</ul>
+<p>Đây là giao diện giỏ hàng ban đầu của chúng ta</p>
+<p><img loading="lazy" src="https://media.techmaster.vn/api/static/9479/c2k745451codum1dsef0" alt="template-shopping-cart"  />
+</p>
+<blockquote>
+<p>Source code HTML, CSS mình để <a href="https://github.com/buihien0109/shopping-cart-javascript/tree/master/shopping-cart-template">ở đây,</a> các bạn có thể tham khảo nhé =))</p>
+</blockquote>
+<p>Để linh động số lượng sản phẩm sẽ hiển thị trong giỏ hàng thì mình sẽ mockup một danh sách số lượng sản phẩm, mỗi sản phẩm ở đây sẽ là một đối tượng bao gồm các thuộc tính như : id, tên sản phẩm, mô tả của sản phẩm, giá sản phẩm, hình ảnh và số lượng của từng sản phẩm ở trong giỏ hàng</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#75715e">// Random id ngẫu nhiên trong khoảng 0 -&gt; 100000
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">randomId</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> Math.<span style="color:#a6e22e">floor</span>(Math.<span style="color:#a6e22e">random</span>() <span style="color:#f92672">*</span> <span style="color:#ae81ff">100000</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Danh sách sản phẩm
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">products</span> <span style="color:#f92672">=</span> [
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">id</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">randomId</span>(),
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;Áo kiểu nữ cam đất phối cổ trắng dập ly&#39;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">description</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#39;Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quae, velit.&#39;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">price</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">250000</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">image</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#39;https://image.yes24.vn/Upload/ProductImage/anhduong201605/1947415_L.jpg?width=550&amp;height=550&#39;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">count</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>,
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">id</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">randomId</span>(),
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;Áo trắng bèo lé đen tay loe dễ thương&#39;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">description</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#39;Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quae, velit.&#39;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">price</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">350000</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">image</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#39;https://image.yes24.vn/Upload/ProductImage/anhduong201605/1914666_L.jpg?width=550&amp;height=550&#39;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">count</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>,
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>];
+</span></span></code></pre></div><p>Bên trên mình đã mockup 1 mảng bảo gồm 2 sản phẩm và lưu chúng trong biến <strong>products</strong></p>
+<p>Ngoài ra mình có định nghĩa function <strong>randomId()</strong> để random ngẫu nhiên Id cho từng sản phẩm</p>
+<p>Sau khi định nghĩa xong mảng các sản phẩm hiện có, bước tiếp theo mình sẽ hiển thị nó ra ngoài giao diện</p>
+<h2 id="render-sản-phẩm-ra-ngoài-giao-diện">Render sản phẩm ra ngoài giao diện<a hidden class="anchor" aria-hidden="true" href="#render-sản-phẩm-ra-ngoài-giao-diện">#</a></h2>
+<p>Để render sản phẩm mình sẽ định nghĩa function <strong>renderUI()</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">productsEle</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">querySelector</span>(<span style="color:#e6db74">&#39;.products&#39;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">renderUI</span>(<span style="color:#a6e22e">arr</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Code xử lý
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span></code></pre></div><p>Trong function <strong>renderUI</strong> mình sẽ truyền vào 1 mảng, dựa vào mảng này chúng ta sẽ render từng thành phần tương ứng, còn <strong>productsEle</strong> chính là nơi chúng ta sẽ render từng sản phẩm vào đó.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">renderUI</span>(<span style="color:#a6e22e">arr</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">productsEle</span>.<span style="color:#a6e22e">innerHTML</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">arr</span>.<span style="color:#a6e22e">length</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">productsEle</span>.<span style="color:#a6e22e">insertAdjacentHTML</span>(
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#39;afterbegin&#39;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#39;&lt;li&gt;Không có sản phẩm nào trong giỏ hàng&lt;/li&gt;&#39;</span>
+</span></span><span style="display:flex;"><span>        );
+</span></span><span style="display:flex;"><span>        document.<span style="color:#a6e22e">querySelector</span>(<span style="color:#e6db74">&#39;.option-container&#39;</span>).<span style="color:#a6e22e">style</span>.<span style="color:#a6e22e">display</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;none&#39;</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Trước khi bắt đầu render, chúng ta sẽ clear hết tất cả nội dung ở trong phần tử <strong>productsEle</strong> bởi vì trong giao diện ban đầu, mình có fix cứng 2 sản phẩm bằng mã HTML để mọi người tiện theo dõi, nhưng bây giờ chúng ta đã có 1 danh sách sản phẩm vừa mockup, điều này không cần thiết nữa</p>
+<p>Tiếp theo mình sẽ kiểm tra thêm trường hợp arr truyền vào có rỗng hay không, nếu mảng ban đầu là rỗng, tức là không có sản phẩm nào trong giỏ hàng, lúc này chúng ta sẽ hiển thị một message lên trên giao diện với nội dung <strong>&ldquo;Không có sản phẩm nào trong giỏ hàng&rdquo;</strong> để thông báo cho người dùng.</p>
+<p>Đồng thời chúng ta cũng ẩn thành phần <strong>&quot;.option-container&quot;</strong> đi, vì đây là nơi hiển thị mã code giảm giá và tổng tiền đơn hàng, khi không có sản phẩm nào trong giỏ hàng thì những thành phần này không cần thiết phải hiển thị lên</p>
+<p>Trường hợp mảng arr có dữ liệu lúc này chúng ta sẽ tiếp tục xử lý như sau :</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">renderUI</span>(<span style="color:#a6e22e">arr</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> <span style="color:#f92672">&lt;</span> <span style="color:#a6e22e">arr</span>.<span style="color:#a6e22e">length</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">p</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">arr</span>[<span style="color:#a6e22e">i</span>];
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">productsEle</span>.<span style="color:#a6e22e">innerHTML</span> <span style="color:#f92672">+=</span> <span style="color:#e6db74">`
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            &lt;li class=&#34;row&#34;&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                &lt;div class=&#34;col left&#34;&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                    &lt;div class=&#34;thumbnail&#34;&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                        &lt;a href=&#34;#&#34;&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                            &lt;img src=&#34;</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">image</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#34; alt=&#34;</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">name</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                        &lt;/a&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                    &lt;/div&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                    &lt;div class=&#34;detail&#34;&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                        &lt;div class=&#34;name&#34;&gt;&lt;a href=&#34;#&#34;&gt;</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">name</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&lt;/a&gt;&lt;/div&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                        &lt;div class=&#34;description&#34;&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                            </span><span style="color:#e6db74">${</span><span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">description</span><span style="color:#e6db74">}</span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                        &lt;/div&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                        &lt;div class=&#34;price&#34;&gt;</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">convertMoney</span>(<span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">price</span>)<span style="color:#e6db74">}</span><span style="color:#e6db74">&lt;/div&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                    &lt;/div&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                &lt;/div&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                &lt;div class=&#34;col right&#34;&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                    &lt;div class=&#34;quantity&#34;&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                        &lt;input type=&#34;number&#34; class=&#34;quantity&#34; step=&#34;1&#34; value=&#34;</span><span style="color:#e6db74">${</span> <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">count</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#34; &gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                    &lt;/div&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                    &lt;div class=&#34;remove&#34;&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                        &lt;span class=&#34;close&#34;&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                            &lt;i class=&#34;fa fa-times&#34; aria-hidden=&#34;true&#34;&gt;&lt;/i&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                        &lt;/span&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                    &lt;/div&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                &lt;/div&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            &lt;/li&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        `</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Ở đây mình sẽ sử dụng vòng lặp <strong>for</strong> để duyệt qua các phần tử của mảng (mỗi phần tử của mảng là object chứa dữ liệu của sản phẩm)</p>
+<p>Với mỗi vòng lặp, mình sẽ tạo ra một cấu trúc HTML của 1 sản phẩm (các bạn có thể copy trong file html ban đầu nhé, toàn bộ thẻ <strong>li</strong> trong <strong>ul.products</strong> đấy). Sau đó mình chỉ cần chèn các giá trị tương ứng vào thôi, ở đây để chèn giá trị mình sử dụng cú pháp của <strong>template string</strong> trong ES6 (${}) nhưng các bạn nên nhớ phải đặt trong dấu <strong>backtick</strong> nhé (``) chứ không phải dấu nháy kép đâu.</p>
+<p>À !!! còn một điều nữa, vì để hiển thị giá sản phẩm ra ngoài giao diện cho giống phong cách Việt Nam tí, mình có định nghĩa thêm function <strong>convertMoney</strong> để convert price sang định dạng VND</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#75715e">// Convert number to money VND
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">convertMoney</span>(<span style="color:#a6e22e">num</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">num</span>.<span style="color:#a6e22e">toLocaleString</span>(<span style="color:#e6db74">&#39;it-IT&#39;</span>, { <span style="color:#a6e22e">style</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;currency&#39;</span>, <span style="color:#a6e22e">currency</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;VND&#39;</span> });
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Để xem kết quả xem sản phẩm đã hiển thị lên chưa, bây giờ chúng ta sẽ gọi function <strong>renderUI</strong> và truyền vào <strong>products</strong> (danh sách sản phẩm đã mockup ban đầu)</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span>window.<span style="color:#a6e22e">onload</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">renderUI</span>(<span style="color:#a6e22e">products</span>);
+</span></span></code></pre></div><p>Ở đây mình lắng nghe sự kiện <strong>onload</strong> để đảm bảo HTML, CSS load xong thì mới thực hiện gọi function</p>
+<p>Và đây là thành quả ban đầu của chúng ta</p>
+<p><img loading="lazy" src="https://media.techmaster.vn/api/static/9479/c2k6s9k51codum1dsedg" alt="render sản phẩm"  />
+</p>
+<p>Nghe vẻ kết quả có vẻ nuột đấy 😋 😋</p>
+<p>Bước tiếp theo chúng ta sẽ cập nhật toàn bộ số lượng sản phẩm hiện có trong giỏ hàng và hiển thị lên</p>
+<h2 id="cập-nhật-số-lượng-sản-phẩm-trong-giỏ-hàng">Cập nhật số lượng sản phẩm trong giỏ hàng<a hidden class="anchor" aria-hidden="true" href="#cập-nhật-số-lượng-sản-phẩm-trong-giỏ-hàng">#</a></h2>
+<p>Để cập nhật số lượng mình sẽ định nghĩa function <strong>updateTotalItem(arr)</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#75715e">// Cập nhật số lượng sản phẩm
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">updateTotalItem</span>(<span style="color:#a6e22e">arr</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">total</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> <span style="color:#f92672">&lt;</span> <span style="color:#a6e22e">arr</span>.<span style="color:#a6e22e">length</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">p</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">arr</span>[<span style="color:#a6e22e">i</span>];
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">total</span> <span style="color:#f92672">+=</span> <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">count</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">total</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Ban đầu khi chưa biết số lượng sản phẩm hiện có là bao nhiều thì chúng ta định nghĩa biến <strong>total = 0</strong>. Tiếp theo sử dụng vòng lặp qua mảng arr. Với mỗi vòng lặp chúng ta sẽ cộng dồn giá trị của <strong>total</strong> với thuộc tính <strong>count</strong> của từng sản phẩm</p>
+<p>Cuối cùng khi vòng lặp kết thúc chúng ta sẽ trả về giá trị của <strong>total</strong></p>
+<p>Sau khi định nghĩa trong function <strong>updateTotalItem()</strong> thì bây giờ chúng ta sẽ gọi ra thôi, để xem nó hiển thị như thế nào, nếu có lỗi thì còn biết đường mà fix =))</p>
+<p>OK, thì ở đây mình sẽ gọi ở trong function <strong>renderUI()</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">renderUI</span>(<span style="color:#a6e22e">arr</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">productsEle</span>.<span style="color:#a6e22e">innerHTML</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Cập nhật số lượng sản phẩm trong cart
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">countEle</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">querySelector</span>(<span style="color:#e6db74">&#39;.count&#39;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">countEle</span>.<span style="color:#a6e22e">innerText</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">`</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">updateTotalItem</span>(<span style="color:#a6e22e">arr</span>)<span style="color:#e6db74">}</span><span style="color:#e6db74"> items in the bag`</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Kiểm tra mảng rỗng
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    ...
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Vòng for
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    ...
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Vì nơi hiện thị số lượng sản phẩm nằm trong &ldquo;.count&rdquo; nên để set lại nội dung cho phần tử, ban đầu mình sẽ truy cập vào phần tử đó, sau đó set lại nội dung bằng cách gọi function <strong>updateTotalItem(arr)</strong> vừa mới định nghĩa ở bên trên</p>
+<p>Quay lại giao diện và xem tổng số lượng sản phẩm đã được cập nhật hay chưa</p>
+<p><img loading="lazy" src="https://media.techmaster.vn/api/static/9479/c2k6uis51codum1dseeg" alt="update-count-product"  />
+</p>
+<p>wow, Ơ mây zing gút chóp 😆</p>
+<p>Cuối cùng sẽ là chức năng xóa sản phẩm trong giỏ hàng</p>
+<h2 id="xóa-sản-phẩm-trong-giỏ-hàng">Xóa sản phẩm trong giỏ hàng<a hidden class="anchor" aria-hidden="true" href="#xóa-sản-phẩm-trong-giỏ-hàng">#</a></h2>
+<p>Để xóa sản phẩm trong giỏ hàng, chúng ta sẽ gán sự kiện click cho từng sản phẩm lúc mà chúng ta thực hiện render</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">renderUI</span>(<span style="color:#a6e22e">arr</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Vòng for
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> <span style="color:#f92672">&lt;</span> <span style="color:#a6e22e">arr</span>.<span style="color:#a6e22e">length</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">p</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">arr</span>[<span style="color:#a6e22e">i</span>];
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">productsEle</span>.<span style="color:#a6e22e">innerHTML</span> <span style="color:#f92672">+=</span> <span style="color:#e6db74">`
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        // ...
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        &lt;div class=&#34;remove&#34;&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            &lt;span class=&#34;close&#34; onclick=&#34;removeItem(</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">id</span><span style="color:#e6db74">}</span><span style="color:#e6db74">)&#34;&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                &lt;i class=&#34;fa fa-times&#34; aria-hidden=&#34;true&#34;&gt;&lt;/i&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            &lt;/span&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        &lt;/div&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        `</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Khi người dùng click vào nút xóa, chúng ta sẽ gọi function <strong>removeItem()</strong> và truyền vào <strong>id</strong> của sản phẩm mà chúng ta muốn xóa</p>
+<p>Function <strong>removeItem</strong> mình sẽ định nghĩa như sau :</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#75715e">// Remove item trong cart
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">removeItem</span>(<span style="color:#a6e22e">id</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> <span style="color:#f92672">&lt;</span> <span style="color:#a6e22e">products</span>.<span style="color:#a6e22e">length</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">products</span>[<span style="color:#a6e22e">i</span>].<span style="color:#a6e22e">id</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">id</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">products</span>.<span style="color:#a6e22e">splice</span>(<span style="color:#a6e22e">i</span>, <span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">renderUI</span>(<span style="color:#a6e22e">products</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Ở trên chúng ta sẽ duyệt qua tất cả sản phẩm trong products, với mỗi sản phẩm chúng ta sẽ kiểm tra xem id của sản phẩm đó có trùng với id truyền vào hay không. Nếu id trùng nhau, lúc này chúng ta sẽ xóa sản phẩm đó ra khỏi mảng products bằng method <strong>splice()</strong></p>
+<p>Ở trên chúng ta mới xóa sản phẩm ra khỏi mảng ban đầu thôi, chứ trên giao diện chưa có chuyện gì xảy ra đâu. Để sản phẩm đó biến mất trên giao diện, chúng ta cần gọi lại function <strong>renderUI()</strong> để nó render lại sản phẩm sau khi xóa lên trên giao diện =))</p>
+<hr>
+<p>Ở <a href="https://techmaster.vn/posts/36494/lam-du-an-shopping-cart-voi-javascript-phan-2">phần tiếp theo</a> của bài viết này, mình sẽ hướng dẫn các bạn các chức năng còn lại bao gồm :</p>
+<ul>
+<li>Thay đổi số lượng sản phẩm</li>
+<li>Cập nhật tổng tiền</li>
+<li>Áp dụng mã giảm giá</li>
+</ul>
+<p>Source code của phần này mình để ở đây nhé : <a href="https://github.com/buihien0109/shopping-cart-javascript/tree/master/shopping-cart-part-1">https://github.com/buihien0109/shopping-cart-javascript/tree/master/shopping-cart-part-1</a></p>
+<blockquote>
+<p>Các bạn có thể tham khảo thêm khóa học này nhé : <a href="https://techmaster.vn/khoa-hoc/ev5/javascript-can-ban-tong-hop-12-game-huyen-thoai">https://techmaster.vn/khoa-hoc/ev5/javascript-can-ban-tong-hop-12-game-huyen-thoai</a></p>
+</blockquote>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://buihien.org/tags/frontend/">FrontEnd</a></li>
+      <li><a href="https://buihien.org/tags/javascript/">Javascript</a></li>
+      <li><a href="https://buihien.org/tags/web/">Web</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2023 <a href="https://buihien.org">Tech&#39;s Blog</a></span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

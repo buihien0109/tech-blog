@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Thử tài cào phím với Typing Game - Javascript (phần 1) | Tech&#39;s Blog</title>
+<meta name="keywords" content="FrontEnd, Javascript, Web, Game">
+<meta name="description" content="Để phục vụ cho nhu cầu cào phím của anh em, thì bài viết này chúng ta sẽ cùng nhau làm thử một ứng dụng hay nói mĩ miều hơn là một game để luyện tập gõ phím 😁. Mình sẽ gọi nôm na là Typing Game cho nó Tây chút chứ không có gì đâu.">
+<meta name="author" content="">
+<link rel="canonical" href="https://buihien.org/blog/thu-tai-cao-phim-voi-typing-game-javascript-phan-1/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.min.a72801f0f40a8d7f71aa1cafd1c2f2a993a1f26ca1cfd38fdba65d5b9b0f08a0.css" integrity="sha256-pygB8PQKjX9xqhyv0cLyqZOh8myhz9OP26ZdW5sPCKA=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.min.b95bacdc39e37a332a9f883b1e78be4abc1fdca2bc1f2641f55e3cd3dabd4d61.js" integrity="sha256-uVus3DnjejMqn4g7Hni&#43;Srwf3KK8HyZB9V4809q9TWE="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://buihien.org/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://buihien.org/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://buihien.org/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://buihien.org/apple-touch-icon.png">
+<link rel="mask-icon" href="https://buihien.org/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="Thử tài cào phím với Typing Game - Javascript (phần 1)" />
+<meta property="og:description" content="Để phục vụ cho nhu cầu cào phím của anh em, thì bài viết này chúng ta sẽ cùng nhau làm thử một ứng dụng hay nói mĩ miều hơn là một game để luyện tập gõ phím 😁. Mình sẽ gọi nôm na là Typing Game cho nó Tây chút chứ không có gì đâu." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://buihien.org/blog/thu-tai-cao-phim-voi-typing-game-javascript-phan-1/" />
+<meta property="og:image" content="https://buihien.org/blog/typing-game/typing-game-1.png" /><meta property="article:section" content="blog" />
+
+
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://buihien.org/blog/typing-game/typing-game-1.png" />
+<meta name="twitter:title" content="Thử tài cào phím với Typing Game - Javascript (phần 1)"/>
+<meta name="twitter:description" content="Để phục vụ cho nhu cầu cào phím của anh em, thì bài viết này chúng ta sẽ cùng nhau làm thử một ứng dụng hay nói mĩ miều hơn là một game để luyện tập gõ phím 😁. Mình sẽ gọi nôm na là Typing Game cho nó Tây chút chứ không có gì đâu."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Blogs",
+      "item": "https://buihien.org/blog/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "Thử tài cào phím với Typing Game - Javascript (phần 1)",
+      "item": "https://buihien.org/blog/thu-tai-cao-phim-voi-typing-game-javascript-phan-1/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Thử tài cào phím với Typing Game - Javascript (phần 1)",
+  "name": "Thử tài cào phím với Typing Game - Javascript (phần 1)",
+  "description": "Để phục vụ cho nhu cầu cào phím của anh em, thì bài viết này chúng ta sẽ cùng nhau làm thử một ứng dụng hay nói mĩ miều hơn là một game để luyện tập gõ phím 😁. Mình sẽ gọi nôm na là Typing Game cho nó Tây chút chứ không có gì đâu.",
+  "keywords": [
+    "FrontEnd", "Javascript", "Web", "Game"
+  ],
+  "articleBody": " Phận làm trai, gõ phím bình thiên hạ\nChí anh hùng, click chuột định giang sơn\nĐể phục vụ cho nhu cầu cào phím của anh em, thì bài viết này chúng ta sẽ cùng nhau làm thử một ứng dụng hay nói mĩ miều hơn là một game để luyện tập gõ phím 😁. Mình sẽ gọi nôm na là Typing Game cho nó Tây chút chứ không có gì đâu.\nBây giờ thì cùng bắt đầu thôi nào 😅\nĐây là giao diện game ban đầu của chúng ta\nPhần sources code đầu game mình để ở đây nhé. Các bạn có thể tham khảo ( https://github.com/buihien0109/typing-game-javascript/tree/master/typing-start)\nKhi bắt đầu game thì mặc định mình sẽ để ngôn ngữ là tiếng việt, chúng ta có thể chuyển qua lại giữa tiếng anh và tiếng việt nếu thích\nOK, bắt tay vào code thôi 😋\n// Khai báo biến let string_vietnamese = 'Tôi trả tiền làm tượng nhưng cũng không hài lòng Anh Tú Thứ năm Chủ khu du lịch An sapa Sa Pa Lào Cai nghĩ cộng đồng mạng nên có cái nhìn chính xác hơn về sự cố liên quan đến tượng Nữ thần Tự do vừa qua Chia sẻ với Zing ông Nguyễn Ngọc Đông chủ khu An sapa thừa nhận rất mệt mỏi trong những ngày qua khi trở thành nạn nhân của cộng đồng mạng'; let string_english = 'This shows us that the global nature needs our lives in the planet It involved all of us even if in many ways different and unequivocal And in this way it teaches us even more on what we have to do to create a just planet fair and safe from an environmental point of view In brief the Covid pandemic has taught us this interdependence this sharing together'; let language = { 1: string_vietnamese, 2: string_english, }; Bởi vì chúng ta có thể chọn qua lại giữa 2 ngôn ngữ tiếng anh và tiếng việt. Nên trong code phần khai báo biến mình có định nghĩa ra 2 biến\nstring_vietnamese : Chứa nội dung tiếng việt string_english : Chứa nội dung tiếng anh và object language giúp chúng ta có thể lấy ra nội dung tương ứng khi đổi ngôn ngữ nhé. Ở đây các key “1”, “2” của object language chính là value của ô select (các bạn có thể quan sát trong mã HTML nhé). Dựa vào value của ô select chúng ta có thể lấy ra ngôn ngữ tương ứng ở trong object language\nTiếp theo mình sẽ thực hiện việc hiển thị các từ lên trên giao diện tùy thuộc vào ngôn ngữ là gì\nHiển thị các từ const languageEl = document.querySelector('#chose-language'); let words; let index; function init() { index = 0; // Chọn ngôn ngữ let languageValue = languageEl.value; words = language[languageValue].toLowerCase().split(' '); // Đổi vị trí các từ trong mảng words = randomWords(words); // Render từ renderWords(words); // Highlight từ đầu tiên highlightWord(index); } Ở bên trên mình định nghĩa function init() tác dụng của function này là khởi tạo ra các thuộc tính ban đầu cho game. Vì ban đầu mục đích của mình chỉ là hiển thị các từ lên trên giao diện, nên phần thời gian và điểm số khi bắt đầu game mình sẽ xử lý sau\nTrong function init() này, mình chia ra thực hiện một số công việc nhỏ:\nChọn ngôn ngữ Đổi vị trí các từ trong mảng Render từ ra ngoài giao diện Highlight từ đầu tiên Bây giờ chúng ta sẽ đi cụ thể vào từng công việc nhé\nChọn ngôn ngữ Để biết người chơi đang chọn ngôn ngữ nào thì chúng ta sẽ lấy ra value tương ứng trong ô select. Nhưng để lấy được value ra thì chúng ta phải truy cập vào ô select trước nhé\nlet languageValue = languageEl.value; Sau khi lấy được value rồi, công việc tiếp theo của chúng ta là dựa vào value đó và lấy ra nội dung đoạn văn tương ứng trong object language và tách nội dung đó thành mảng các từ sử dụng split()\nwords = language[languageValue].toLowerCase().split(' '); Để thêm phần tự tin mình đã làm đúng thì mọi người có thể console.log(words) kết quả ra kiểm tra nhé.\nMình nên kiểm tra kết quả ở từng phần một trước khi chuyển sang phần tiếp theo, để chẳng may có lỗi sai còn biết fix ở chỗ nào, chứ làm một lèo, sau kiểm tra lại, lại không biết sai ở đâu 😅 😅\nNếu bước đầu tiên thấy ổn rồi, mình sẽ chuyển qua bước tiếp theo nhé\nĐổi vị trí các từ trong mảng function randomWords(arr) { return arr.sort(function () { return Math.random() - 0.5; }); } Có nhiều cách để chúng ta có đảo vị trí của các phần tử trong mảng (tùy các bạn lựa chọn). Ở trong function randomWords() mình sẽ tận dụng các phương thức có sẵn trong Javascript như sort(), Math.random() để có thể đảo vị trí các phần tử trong mảng\nNếu bạn nào quên cách sử dụng có thể xem lại ở đây nhé\nSử dụng sort() method Sử dụng Math.random() Render từ ra ngoài giao diện const wordsEl = document.querySelector('#words'); function renderWords(arr) { wordsEl.innerHTML = ''; for (let i = 0; i \u003c arr.length; i++) { const w = arr[i]; wordsEl.innerHTML += ` ${w} `; } } Mục đích của function renderWords() giúp chúng ta có thể hiển thị các từ lên trên giao diện\nTham số arr chính là một mảng các từ\nTrước khi chúng ta render các từ ra ngoài giao diện, chúng ta sẽ clear hết nội dung trong phần tử wordsEl (đây chính là nơi chúng ta sẽ render vào)\nSau đó sử dụng vòng lặp for để duyệt qua các phần tử của mảng arr (mỗi phần tử của mảng là chính là 1 từ)\nVới mỗi vòng lặp, mình sẽ tạo ra một cấu trúc HTML của từ (mỗi từ sẽ được bọc trong 1 thẻ span). Sau đó mình chỉ cần chèn các giá trị tương ứng của từ vào trong thẻ span thôi, ở đây để chèn giá trị mình sử dụng cú pháp của template string trong ES6 (${}) nhưng các bạn nên nhớ phải đặt trong dấu backtick nhé (``) chứ không phải dấu nháy kép đâu.\nHighlight từ đầu tiên function highlightWord(index) { let spans = document.querySelectorAll('#words span'); Array.from(spans).map((span) =\u003e span.classList.remove('highlight')); spans[index].classList.add('highlight'); } Để highlight từ đầu tiên khi bắt đầu game, mình sẽ truyền index vào, index ở đây chính là vị trí của từ đó ở trong mảng words. Về sau khi muốn highlight các từ khác mình chỉ cần truyền index phù hợp vào là được\nMuốn từ đó được highlight lên, mình chỉ cần thêm class “highlight” vào thẻ span có chỉ số tương ứng với chỉ số index ở trong spans nhé\nVì trong một thời điểm chỉ có 1 từ được highlight lên, vì vậy trước khi highlight từ đó mình sẽ remove class “highlight” ở tất cả các thẻ span, sau đó mới thêm class “highlight” vào thẻ span có chỉ số là index, điều này đảm bảo chỉ có 1 từ được highlight\nSau đó định nghĩa xong các công việc nhỏ rồi, tiếp đến chúng ta sẽ gọi function init() để xem kết quả trông như thế nào 😄\nwindow.onload = init; Ở đây mình lắng nghe sự kiện onload để đảm bảo HTML, CSS load xong thì mới thực hiện gọi function init\nVà đây là thành quả sau ban đầu quá trình miệt mài viết code của chúng ta 😄\nVới kết quả ban đầu, mình đã render thành công các từ ra ngoài giao diện và đã highlight được từ đầu tiên (mặc định là hiển thị tiếng Việt nhé)\nVậy câu hỏi tiếp theo, bây giờ mình muốn hiển thị các từ tiếng Anh ra thì làm như thế nào, vì bên trên mình mới hiển thị các từ tiếng Việt\nOK, bây giờ mình sẽ tiếp tục xử lý để chúng ta có thể hiển thị được tiếng Anh\nlanguageEl.addEventListener('change', function () { init(); }); Game là dễ phải không nào 😁😁 !!! Chỉ cần phần select chọn ngôn ngữ được thay đổi giá trị, thì lúc này function init() sẽ được gọi lại và render ra ngôn ngữ tương ứng với giá trị mình chúng ta đã chọn trong ô select\nỞ phần tiếp theo của bài viết này, mình sẽ hướng dẫn các bạn các chức năng bao gồm :\nĐếm ngược thời gian Xử lý khi gõ từ Cập nhật kết quả Source code của phần này mình để ở đây nhé : https://github.com/buihien0109/typing-game-javascript/tree/master/typing-part-1\nCác bạn có thể tham khảo thêm khóa học này nhé:\nJavascript căn bản - Tổng hợp 12 game huyền thoại - tại đây. Khóa học Web Frontend (HTML, CSS, JavaScript) + ReactJs - tại đây ",
+  "wordCount" : "1491",
+  "inLanguage": "en",
+  "image":"https://buihien.org/blog/typing-game/typing-game-1.png","datePublished": "0001-01-01T00:00:00Z",
+  "dateModified": "0001-01-01T00:00:00Z",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://buihien.org/blog/thu-tai-cao-phim-voi-typing-game-javascript-phan-1/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Tech's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://buihien.org/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header sticky-header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://buihien.org" accesskey="h" title="Tech&#39;s Blog (Alt + H)">Tech&#39;s Blog</a>
+            <span class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </span>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://buihien.org/" title="Home">
+                    <span>Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://buihien.org/blog" title="Blog">
+                    <span>Blog</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://buihien.org/tags" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://buihien.org/search" title="Search (Alt &#43; /)" accesskey=/>
+                    <span>Search</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://buihien.org">Home</a>&nbsp;»&nbsp;<a href="https://buihien.org/blog/">Blogs</a></div>
+    <h1 class="post-title">
+      Thử tài cào phím với Typing Game - Javascript (phần 1)
+    </h1>
+    <div class="post-description">
+      Để phục vụ cho nhu cầu cào phím của anh em, thì bài viết này chúng ta sẽ cùng nhau làm thử một ứng dụng hay nói mĩ miều hơn là một game để luyện tập gõ phím 😁. Mình sẽ gọi nôm na là Typing Game cho nó Tây chút chứ không có gì đâu.
+    </div>
+    <div class="post-meta">
+
+
+24/12/2022
+
+</div>
+  </header> 
+<figure class="entry-cover"><img loading="lazy" src="https://buihien.org/blog/typing-game/typing-game-1.png" alt="">
+        
+</figure><div class="toc">
+    <details >
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">‎ Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#hi%e1%bb%83n-th%e1%bb%8b-c%c3%a1c-t%e1%bb%ab" aria-label="Hiển thị các từ">Hiển thị các từ</a><ul>
+                        
+                <li>
+                    <a href="#ch%e1%bb%8dn-ng%c3%b4n-ng%e1%bb%af" aria-label="Chọn ngôn ngữ">Chọn ngôn ngữ</a></li>
+                <li>
+                    <a href="#%c4%91%e1%bb%95i-v%e1%bb%8b-tr%c3%ad-c%c3%a1c-t%e1%bb%ab-trong-m%e1%ba%a3ng" aria-label="Đổi vị trí các từ trong mảng">Đổi vị trí các từ trong mảng</a></li>
+                <li>
+                    <a href="#render-t%e1%bb%ab-ra-ngo%c3%a0i-giao-di%e1%bb%87n" aria-label="Render từ ra ngoài giao diện">Render từ ra ngoài giao diện</a></li>
+                <li>
+                    <a href="#highlight-t%e1%bb%ab-%c4%91%e1%ba%a7u-ti%c3%aan" aria-label="Highlight từ đầu tiên">Highlight từ đầu tiên</a>
+                </li>
+            </ul>
+            </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><blockquote>
+<p>Phận làm trai, gõ phím bình thiên hạ</p>
+<p>Chí anh hùng, click chuột định giang sơn</p>
+</blockquote>
+<p>Để phục vụ cho nhu cầu cào phím của anh em, thì bài viết này chúng ta sẽ cùng nhau làm thử một ứng dụng hay nói mĩ miều hơn là một game để luyện tập gõ phím 😁. Mình sẽ gọi nôm na là Typing Game cho nó Tây chút chứ không có gì đâu.</p>
+<p>Bây giờ thì cùng bắt đầu thôi nào 😅</p>
+<hr>
+<p>Đây là giao diện game ban đầu của chúng ta</p>
+<p><img loading="lazy" src="https://media.techmaster.vn/api/static/9479/c2lig1c51codum1dseug" alt="giao diện bắt đầu game typing"  />
+</p>
+<blockquote>
+<p>Phần sources code đầu game mình để ở đây nhé. Các bạn có thể tham khảo ( <a href="https://github.com/buihien0109/typing-game-javascript/tree/master/typing-start">https://github.com/buihien0109/typing-game-javascript/tree/master/typing-start</a>)</p>
+</blockquote>
+<p>Khi bắt đầu game thì mặc định mình sẽ để ngôn ngữ là tiếng việt, chúng ta có thể chuyển qua lại giữa tiếng anh và tiếng việt nếu thích</p>
+<p>OK, bắt tay vào code thôi 😋</p>
+<pre tabindex="0"><code class="language-lang-javascript" data-lang="lang-javascript">// Khai báo biến
+let string_vietnamese =
+    &#39;Tôi trả tiền làm tượng nhưng cũng không hài lòng Anh Tú Thứ năm Chủ khu du lịch An sapa Sa Pa Lào Cai nghĩ cộng đồng mạng nên có cái nhìn chính xác hơn về sự cố liên quan đến tượng Nữ thần Tự do vừa qua Chia sẻ với Zing ông Nguyễn Ngọc Đông chủ khu An sapa thừa nhận rất mệt mỏi trong những ngày qua khi trở thành nạn nhân của cộng đồng mạng&#39;;
+
+let string_english =
+    &#39;This shows us that the global nature needs our lives in the planet It involved all of us even if in many ways different and unequivocal And in this way it teaches us even more on what we have to do to create a just planet fair and safe from an environmental point of view In brief the Covid pandemic has taught us this interdependence this sharing together&#39;;
+
+let language = {
+    1: string_vietnamese,
+    2: string_english,
+};
+</code></pre><p>Bởi vì chúng ta có thể chọn qua lại giữa 2 ngôn ngữ tiếng anh và tiếng việt. Nên trong code phần khai báo biến mình có định nghĩa ra 2 biến</p>
+<ul>
+<li><strong>string_vietnamese</strong> : Chứa nội dung tiếng việt</li>
+<li><strong>string_english</strong> : Chứa nội dung tiếng anh</li>
+</ul>
+<p>và object <strong>language</strong> giúp chúng ta có thể lấy ra nội dung tương ứng khi đổi ngôn ngữ nhé. Ở đây các key &ldquo;1&rdquo;, &ldquo;2&rdquo; của object <strong>language</strong> chính là value của ô select (các bạn có thể quan sát trong mã HTML nhé). Dựa vào value của ô select chúng ta có thể lấy ra ngôn ngữ tương ứng ở trong object <strong>language</strong></p>
+<p><img loading="lazy" src="https://media.techmaster.vn/api/static/9479/c2likms51codum1dsev0" alt="giá trị select"  />
+</p>
+<p>Tiếp theo mình sẽ thực hiện việc hiển thị các từ lên trên giao diện tùy thuộc vào ngôn ngữ là gì</p>
+<h2 id="hiển-thị-các-từ">Hiển thị các từ<a hidden class="anchor" aria-hidden="true" href="#hiển-thị-các-từ">#</a></h2>
+<pre tabindex="0"><code class="language-lang-javascript" data-lang="lang-javascript">const languageEl = document.querySelector(&#39;#chose-language&#39;);
+
+let words;
+let index;
+
+function init() {
+    index = 0;
+
+    // Chọn ngôn ngữ
+    let languageValue = languageEl.value;
+    words = language[languageValue].toLowerCase().split(&#39; &#39;);
+
+    // Đổi vị trí các từ trong mảng
+    words = randomWords(words);
+
+    // Render từ
+    renderWords(words);
+
+    // Highlight từ đầu tiên
+    highlightWord(index);
+}
+</code></pre><p>Ở bên trên mình định nghĩa <strong>function init()</strong> tác dụng của function này là khởi tạo ra các thuộc tính ban đầu cho game. Vì ban đầu mục đích của mình chỉ là hiển thị các từ lên trên giao diện, nên phần thời gian và điểm số khi bắt đầu game mình sẽ xử lý sau</p>
+<p>Trong <strong>function init()</strong> này, mình chia ra thực hiện một số công việc nhỏ:</p>
+<ul>
+<li>Chọn ngôn ngữ</li>
+<li>Đổi vị trí các từ trong mảng</li>
+<li>Render từ ra ngoài giao diện</li>
+<li>Highlight từ đầu tiên</li>
+</ul>
+<p>Bây giờ chúng ta sẽ đi cụ thể vào từng công việc nhé</p>
+<h3 id="chọn-ngôn-ngữ">Chọn ngôn ngữ<a hidden class="anchor" aria-hidden="true" href="#chọn-ngôn-ngữ">#</a></h3>
+<p>Để biết người chơi đang chọn ngôn ngữ nào thì chúng ta sẽ lấy ra <strong>value</strong> tương ứng trong ô select. Nhưng để lấy được <strong>value</strong> ra thì chúng ta phải truy cập vào ô select trước nhé</p>
+<pre tabindex="0"><code class="language-lang-javascript" data-lang="lang-javascript">let languageValue = languageEl.value;
+</code></pre><p>Sau khi lấy được value rồi, công việc tiếp theo của chúng ta là dựa vào value đó và lấy ra nội dung đoạn văn tương ứng trong <strong>object language</strong> và tách nội dung đó thành mảng các từ sử dụng <strong>split()</strong></p>
+<pre tabindex="0"><code class="language-lang-javascript" data-lang="lang-javascript">words = language[languageValue].toLowerCase().split(&#39; &#39;);
+</code></pre><p>Để thêm phần tự tin mình đã làm đúng thì mọi người có thể <strong>console.log(words)</strong> kết quả ra kiểm tra nhé.</p>
+<p>Mình nên kiểm tra kết quả ở từng phần một trước khi chuyển sang phần tiếp theo, để chẳng may có lỗi sai còn biết fix ở chỗ nào, chứ làm một lèo, sau kiểm tra lại, lại không biết sai ở đâu 😅 😅</p>
+<p>Nếu bước đầu tiên thấy ổn rồi, mình sẽ chuyển qua bước tiếp theo nhé</p>
+<h3 id="đổi-vị-trí-các-từ-trong-mảng">Đổi vị trí các từ trong mảng<a hidden class="anchor" aria-hidden="true" href="#đổi-vị-trí-các-từ-trong-mảng">#</a></h3>
+<pre tabindex="0"><code class="language-lang-javascript" data-lang="lang-javascript">function randomWords(arr) {
+    return arr.sort(function () {
+        return Math.random() - 0.5;
+    });
+}
+</code></pre><p>Có nhiều cách để chúng ta có đảo vị trí của các phần tử trong mảng (tùy các bạn lựa chọn). Ở trong function <strong>randomWords()</strong> mình sẽ tận dụng các phương thức có sẵn trong Javascript như <strong>sort()</strong>, <strong>Math.random()</strong> để có thể đảo vị trí các phần tử trong mảng</p>
+<p>Nếu bạn nào quên cách sử dụng có thể xem lại ở đây nhé</p>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort?retiredLocale=vi">Sử dụng sort() method</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random">Sử dụng Math.random()</a></li>
+</ul>
+<h3 id="render-từ-ra-ngoài-giao-diện">Render từ ra ngoài giao diện<a hidden class="anchor" aria-hidden="true" href="#render-từ-ra-ngoài-giao-diện">#</a></h3>
+<pre tabindex="0"><code class="language-lang-javascript" data-lang="lang-javascript">const wordsEl = document.querySelector(&#39;#words&#39;);
+
+function renderWords(arr) {
+    wordsEl.innerHTML = &#39;&#39;;
+    for (let i = 0; i &lt; arr.length; i++) {
+        const w = arr[i];
+        wordsEl.innerHTML += `
+            &lt;span&gt;${w}&lt;/span&gt;
+        `;
+    }
+}
+</code></pre><p>Mục đích của function <strong>renderWords()</strong> giúp chúng ta có thể hiển thị các từ lên trên giao diện</p>
+<p>Tham số <strong>arr</strong> chính là một mảng các từ</p>
+<p>Trước khi chúng ta render các từ ra ngoài giao diện, chúng ta sẽ clear hết nội dung trong phần tử <strong>wordsEl</strong> (đây chính là nơi chúng ta sẽ render vào)</p>
+<p>Sau đó sử dụng vòng lặp for để duyệt qua các phần tử của mảng arr (mỗi phần tử của mảng là chính là 1 từ)</p>
+<p>Với mỗi vòng lặp, mình sẽ tạo ra một cấu trúc HTML của từ (mỗi từ sẽ được bọc trong 1 thẻ <strong>span</strong>). Sau đó mình chỉ cần chèn các giá trị tương ứng của từ vào trong thẻ <strong>span</strong> thôi, ở đây để chèn giá trị mình sử dụng cú pháp của template string trong <strong>ES6</strong> (${}) nhưng các bạn nên nhớ phải đặt trong dấu <strong>backtick</strong> nhé (``) chứ không phải dấu nháy kép đâu.</p>
+<h3 id="highlight-từ-đầu-tiên">Highlight từ đầu tiên<a hidden class="anchor" aria-hidden="true" href="#highlight-từ-đầu-tiên">#</a></h3>
+<pre tabindex="0"><code class="language-lang-javascript" data-lang="lang-javascript">function highlightWord(index) {
+    let spans = document.querySelectorAll(&#39;#words span&#39;);
+    Array.from(spans).map((span) =&gt; span.classList.remove(&#39;highlight&#39;));
+    spans[index].classList.add(&#39;highlight&#39;);
+}
+</code></pre><p>Để highlight từ đầu tiên khi bắt đầu game, mình sẽ truyền <strong>index</strong> vào, <strong>index</strong> ở đây chính là vị trí của từ đó ở trong mảng <strong>words</strong>. Về sau khi muốn highlight các từ khác mình chỉ cần truyền <strong>index</strong> phù hợp vào là được</p>
+<p>Muốn từ đó được highlight lên, mình chỉ cần thêm class <strong>&ldquo;highlight&rdquo;</strong> vào thẻ <strong>span</strong> có chỉ số tương ứng với chỉ số <strong>index</strong> ở trong <strong>spans</strong> nhé</p>
+<p>Vì trong một thời điểm chỉ có 1 từ được highlight lên, vì vậy trước khi highlight từ đó mình sẽ remove class <strong>&ldquo;highlight&rdquo;</strong> ở tất cả các thẻ span, sau đó mới thêm class <strong>&ldquo;highlight&rdquo;</strong> vào thẻ span có chỉ số là index, điều này đảm bảo chỉ có 1 từ được highlight</p>
+<p>Sau đó định nghĩa xong các công việc nhỏ rồi, tiếp đến chúng ta sẽ gọi function init() để xem kết quả trông như thế nào 😄</p>
+<pre tabindex="0"><code class="language-lang-javascript" data-lang="lang-javascript">window.onload = init;
+</code></pre><p>Ở đây mình lắng nghe sự kiện <strong>onload</strong> để đảm bảo HTML, CSS load xong thì mới thực hiện gọi <strong>function init</strong></p>
+<p>Và đây là thành quả sau ban đầu quá trình miệt mài viết code của chúng ta 😄</p>
+<p><img loading="lazy" src="https://media.techmaster.vn/api/static/9479/c2ll2s451codum1dsf00" alt="Kết quả ban đầu typing game"  />
+</p>
+<p>Với kết quả ban đầu, mình đã render thành công các từ ra ngoài giao diện và đã highlight được từ đầu tiên (mặc định là hiển thị tiếng Việt nhé)</p>
+<p>Vậy câu hỏi tiếp theo, bây giờ mình muốn hiển thị các từ tiếng Anh ra thì làm như thế nào, vì bên trên mình mới hiển thị các từ tiếng Việt</p>
+<p>OK, bây giờ mình sẽ tiếp tục xử lý để chúng ta có thể hiển thị được tiếng Anh</p>
+<pre tabindex="0"><code class="language-lang-javascript" data-lang="lang-javascript">languageEl.addEventListener(&#39;change&#39;, function () {
+    init();
+});
+</code></pre><p>Game là dễ phải không nào 😁😁 !!! Chỉ cần phần select chọn ngôn ngữ được thay đổi giá trị, thì lúc này <strong>function init()</strong> sẽ được gọi lại và render ra ngôn ngữ tương ứng với giá trị mình chúng ta đã chọn trong ô select</p>
+<p><img loading="lazy" src="https://media.techmaster.vn/api/static/9479/c2ll5ls51codum1dsf0g" alt="đổi ngôn ngữ typing game"  />
+</p>
+<hr>
+<p>Ở phần tiếp theo của bài viết này, mình sẽ hướng dẫn các bạn các chức năng bao gồm :</p>
+<ul>
+<li>Đếm ngược thời gian</li>
+<li>Xử lý khi gõ từ</li>
+<li>Cập nhật kết quả</li>
+</ul>
+<p>Source code của phần này mình để ở đây nhé : <a href="https://github.com/buihien0109/typing-game-javascript/tree/master/typing-part-1">https://github.com/buihien0109/typing-game-javascript/tree/master/typing-part-1</a></p>
+<p>Các bạn có thể tham khảo thêm khóa học này nhé:</p>
+<ul>
+<li>Javascript căn bản - Tổng hợp 12 game huyền thoại - <a href="https://techmaster.vn/khoa-hoc/ev5/javascript-can-ban-tong-hop-12-game-huyen-thoai">tại đây</a>.</li>
+<li>Khóa học Web Frontend (HTML, CSS, JavaScript) + ReactJs - <a href="https://techmaster.vn/lo-trinh/front-end">tại đây</a></li>
+</ul>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://buihien.org/tags/frontend/">FrontEnd</a></li>
+      <li><a href="https://buihien.org/tags/javascript/">Javascript</a></li>
+      <li><a href="https://buihien.org/tags/web/">Web</a></li>
+      <li><a href="https://buihien.org/tags/game/">Game</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2023 <a href="https://buihien.org">Tech&#39;s Blog</a></span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

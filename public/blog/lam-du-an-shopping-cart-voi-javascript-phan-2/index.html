@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Làm dự án Shopping Cart với Javascript (phần 2) | Tech&#39;s Blog</title>
+<meta name="keywords" content="FrontEnd, Javascript, Web">
+<meta name="description" content="Tiếp tục với bài hướng dẫn Làm dự án Shopping Cart. Ở bài viết Làm dự án Shopping Cart với Javascript (phần 1) chúng ta đã làm được các chức năng cơ bản như">
+<meta name="author" content="">
+<link rel="canonical" href="https://buihien.org/blog/lam-du-an-shopping-cart-voi-javascript-phan-2/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.min.a72801f0f40a8d7f71aa1cafd1c2f2a993a1f26ca1cfd38fdba65d5b9b0f08a0.css" integrity="sha256-pygB8PQKjX9xqhyv0cLyqZOh8myhz9OP26ZdW5sPCKA=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.min.b95bacdc39e37a332a9f883b1e78be4abc1fdca2bc1f2641f55e3cd3dabd4d61.js" integrity="sha256-uVus3DnjejMqn4g7Hni&#43;Srwf3KK8HyZB9V4809q9TWE="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://buihien.org/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://buihien.org/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://buihien.org/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://buihien.org/apple-touch-icon.png">
+<link rel="mask-icon" href="https://buihien.org/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="Làm dự án Shopping Cart với Javascript (phần 2)" />
+<meta property="og:description" content="Tiếp tục với bài hướng dẫn Làm dự án Shopping Cart. Ở bài viết Làm dự án Shopping Cart với Javascript (phần 1) chúng ta đã làm được các chức năng cơ bản như" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://buihien.org/blog/lam-du-an-shopping-cart-voi-javascript-phan-2/" />
+<meta property="og:image" content="https://buihien.org/blog/shopping-cart/shopping-cart-2.png" /><meta property="article:section" content="blog" />
+
+
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://buihien.org/blog/shopping-cart/shopping-cart-2.png" />
+<meta name="twitter:title" content="Làm dự án Shopping Cart với Javascript (phần 2)"/>
+<meta name="twitter:description" content="Tiếp tục với bài hướng dẫn Làm dự án Shopping Cart. Ở bài viết Làm dự án Shopping Cart với Javascript (phần 1) chúng ta đã làm được các chức năng cơ bản như"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Blogs",
+      "item": "https://buihien.org/blog/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "Làm dự án Shopping Cart với Javascript (phần 2)",
+      "item": "https://buihien.org/blog/lam-du-an-shopping-cart-voi-javascript-phan-2/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Làm dự án Shopping Cart với Javascript (phần 2)",
+  "name": "Làm dự án Shopping Cart với Javascript (phần 2)",
+  "description": "Tiếp tục với bài hướng dẫn Làm dự án Shopping Cart. Ở bài viết Làm dự án Shopping Cart với Javascript (phần 1) chúng ta đã làm được các chức năng cơ bản như",
+  "keywords": [
+    "FrontEnd", "Javascript", "Web"
+  ],
+  "articleBody": "Tiếp tục với bài hướng dẫn Làm dự án Shopping Cart. Ở bài viết Làm dự án Shopping Cart với Javascript (phần 1) chúng ta đã làm được các chức năng cơ bản như :\nRender danh sách sản phẩm từ 1 data có sẵn Cập nhật số lượng sản phẩm hiện có trong giỏ hàng Xóa sản phẩm khỏi giỏ hàng Trong bài viết này mình sẽ tiếp tục làm các chức năng còn lại bao gồm:\nThay đổi số lượng sản phẩm Cập nhật tổng tiền Áp dụng mã giảm giá Bắt đầu thôi nào 😊😊\nThay đổi số lượng sản phẩm Khi người dùng muốn thay đổi số lượng của một sản phẩm, họ có thể nhập một số nguyên dương bất kỳ vào ô số lượng, lúc này chúng ta cần tính toán lại tổng số lượng sản phẩm có trong giỏ hàng và cập nhật lên trên giao diện\nĐể làm điều này, lúc render danh sách sản phẩm ra ngoài giao diện, chúng ta sẽ gán sự kiện onchange cho ô input, để mỗi khi số lượng sản phẩm thay đổi, nó sẽ kích hoạt sự kiện này\nfunction renderUI(arr) { // ... for (let i = 0; i \u003c arr.length; i++) { const p = arr[i]; productsEle.innerHTML += ` // ... ",
+  "wordCount" : "1559",
+  "inLanguage": "en",
+  "image":"https://buihien.org/blog/shopping-cart/shopping-cart-2.png","datePublished": "0001-01-01T00:00:00Z",
+  "dateModified": "0001-01-01T00:00:00Z",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://buihien.org/blog/lam-du-an-shopping-cart-voi-javascript-phan-2/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Tech's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://buihien.org/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header sticky-header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://buihien.org" accesskey="h" title="Tech&#39;s Blog (Alt + H)">Tech&#39;s Blog</a>
+            <span class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </span>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://buihien.org/" title="Home">
+                    <span>Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://buihien.org/blog" title="Blog">
+                    <span>Blog</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://buihien.org/tags" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://buihien.org/search" title="Search (Alt &#43; /)" accesskey=/>
+                    <span>Search</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://buihien.org">Home</a>&nbsp;»&nbsp;<a href="https://buihien.org/blog/">Blogs</a></div>
+    <h1 class="post-title">
+      Làm dự án Shopping Cart với Javascript (phần 2)
+    </h1>
+    <div class="post-description">
+      Tiếp tục với bài hướng dẫn Làm dự án Shopping Cart. Ở bài viết Làm dự án Shopping Cart với Javascript (phần 1) chúng ta đã làm được các chức năng cơ bản như
+    </div>
+    <div class="post-meta">
+
+
+23/12/2022
+
+</div>
+  </header> 
+<figure class="entry-cover"><img loading="lazy" src="https://buihien.org/blog/shopping-cart/shopping-cart-2.png" alt="">
+        
+</figure><div class="toc">
+    <details >
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">‎ Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#thay-%c4%91%e1%bb%95i-s%e1%bb%91-l%c6%b0%e1%bb%a3ng-s%e1%ba%a3n-ph%e1%ba%a9m" aria-label="Thay đổi số lượng sản phẩm">Thay đổi số lượng sản phẩm</a></li>
+                <li>
+                    <a href="#c%e1%ba%adp-nh%e1%ba%adt-t%e1%bb%95ng-ti%e1%bb%81n" aria-label="Cập nhật tổng tiền">Cập nhật tổng tiền</a></li>
+                <li>
+                    <a href="#%c3%a1p-d%e1%bb%a5ng-m%c3%a3-gi%e1%ba%a3m-gi%c3%a1" aria-label="Áp dụng mã giảm giá">Áp dụng mã giảm giá</a>
+                </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><p>Tiếp tục với bài hướng dẫn Làm dự án Shopping Cart. Ở bài viết <a href="https://techmaster.vn/posts/36493/lam-du-an-shopping-cart-voi-javascript-phan-1">Làm dự án Shopping Cart với Javascript (phần 1)</a> chúng ta đã làm được các chức năng cơ bản như :</p>
+<ul>
+<li>Render danh sách sản phẩm từ 1 data có sẵn</li>
+<li>Cập nhật số lượng sản phẩm hiện có trong giỏ hàng</li>
+<li>Xóa sản phẩm khỏi giỏ hàng</li>
+</ul>
+<p>Trong bài viết này mình sẽ tiếp tục làm các chức năng còn lại bao gồm:</p>
+<ul>
+<li>Thay đổi số lượng sản phẩm</li>
+<li>Cập nhật tổng tiền</li>
+<li>Áp dụng mã giảm giá</li>
+</ul>
+<p>Bắt đầu thôi nào 😊😊</p>
+<h2 id="thay-đổi-số-lượng-sản-phẩm">Thay đổi số lượng sản phẩm<a hidden class="anchor" aria-hidden="true" href="#thay-đổi-số-lượng-sản-phẩm">#</a></h2>
+<p>Khi người dùng muốn thay đổi số lượng của một sản phẩm, họ có thể nhập một số nguyên dương bất kỳ vào ô số lượng, lúc này chúng ta cần tính toán lại tổng số lượng sản phẩm có trong giỏ hàng và cập nhật lên trên giao diện</p>
+<p>Để làm điều này, lúc render danh sách sản phẩm ra ngoài giao diện, chúng ta sẽ gán sự kiện <strong>onchange</strong> cho ô input, để mỗi khi số lượng sản phẩm thay đổi, nó sẽ kích hoạt sự kiện này</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">renderUI</span>(<span style="color:#a6e22e">arr</span>) {
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> <span style="color:#f92672">&lt;</span> <span style="color:#a6e22e">arr</span>.<span style="color:#a6e22e">length</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">p</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">arr</span>[<span style="color:#a6e22e">i</span>];
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">productsEle</span>.<span style="color:#a6e22e">innerHTML</span> <span style="color:#f92672">+=</span> <span style="color:#e6db74">`
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        // ...
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        &lt;div class=&#34;quantity&#34;&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            &lt;input
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                type=&#34;number&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                class=&#34;quantity&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                step=&#34;1&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                value=&#34;</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">count</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                onchange=&#34;changeTotalProduct(</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">id</span><span style="color:#e6db74">}</span><span style="color:#e6db74">, event)&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">            &gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        &lt;/div&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        `</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Khi số lượng sản phẩm thay đổi mình sẽ gọi function <strong>changeTotalProduct()</strong> để cập nhật lại số lượng thông qua id, và tham số <strong>event</strong> trong hàm xử lý sự kiện sẽ giúp chúng ta có thể lấy được giá trị số lượng trong ô input</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#75715e">// Thay đổi số lượng sản phẩm
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">changeTotalProduct</span>(<span style="color:#a6e22e">id</span>, <span style="color:#a6e22e">e</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> <span style="color:#f92672">&lt;</span> <span style="color:#a6e22e">products</span>.<span style="color:#a6e22e">length</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">products</span>[<span style="color:#a6e22e">i</span>].<span style="color:#a6e22e">id</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">id</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">products</span>[<span style="color:#a6e22e">i</span>].<span style="color:#a6e22e">count</span> <span style="color:#f92672">=</span> Number(<span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">target</span>.<span style="color:#a6e22e">value</span>);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">renderUI</span>(<span style="color:#a6e22e">products</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Trong function <strong>changeTotalProduct()</strong> mình định nghĩa ở trên, chúng ta sẽ duyệt qua mảng products mockup ban đầu để tìm ra sản phẩm có id = id truyền vào. Khi tìm được sản phẩm phù hợp, lúc này chúng ta sẽ cập nhật lại giá trị <strong>count</strong> = giá trị trong ô input.</p>
+<p>Ở đây để lấy giá trị của ô input thông qua biến event trong hàm xử lý sự kiện, chúng sẽ sử dụng cú pháp <strong>e.target.value</strong> và hàm <strong>Number()</strong> sẽ giúp convert giá trị đó thành kiểu <strong>number</strong></p>
+<p>Sau khi cập nhật xong giá trị count cho sản phẩm, chúng ta sẽ gọi lại function <strong>renderUI()</strong> để tiến hành cập nhật bên trên giao diện</p>
+<h2 id="cập-nhật-tổng-tiền">Cập nhật tổng tiền<a hidden class="anchor" aria-hidden="true" href="#cập-nhật-tổng-tiền">#</a></h2>
+<p>Trong phần cập nhật tổng tiền này, chúng ta sẽ cập nhật 3 giá trị:</p>
+<ul>
+<li>Subtotal : Số tiền ban đầu</li>
+<li>VAT : Thuế giá trị gia tăng</li>
+<li>Total : Số tiền cuối cùng mà người mua phải trả</li>
+</ul>
+<p>Công thức tính mình sẽ áp dụng như sau:</p>
+<ul>
+<li>Subtotal = Số lượng * Giá tiền từng sản phẩm</li>
+<li>VAT = Subtotal * 5%</li>
+<li>Total = Subtotal + VAT</li>
+</ul>
+<blockquote>
+<p>Ở phần này mình chưa áp dụng mã giảm giá nhé. Nếu có mã giảm giá thì công thức sẽ khác, phần mã giảm giá mình sẽ xử lý sau</p>
+</blockquote>
+<p>Bây giờ tiến hành tính tiền cho khách hàng của mình thôi nào. Cái gì liên quan đến tiền nong đều phải cẩn thận, hihi 😅😅</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#75715e">// Truy cập vào các thành phần
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">subTotalEl</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">querySelector</span>(<span style="color:#e6db74">&#39;.subtotal span&#39;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">vatEl</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">querySelector</span>(<span style="color:#e6db74">&#39;.vat span&#39;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">totalEle</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">querySelector</span>(<span style="color:#e6db74">&#39;.total span&#39;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Cập nhật tổng tiền
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">updateTotalMoney</span>(<span style="color:#a6e22e">arr</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Tính tổng tiền cart
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">totalMoney</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> <span style="color:#f92672">&lt;</span> <span style="color:#a6e22e">arr</span>.<span style="color:#a6e22e">length</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">p</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">arr</span>[<span style="color:#a6e22e">i</span>];
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">totalMoney</span> <span style="color:#f92672">+=</span> <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">count</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">price</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Cập nhật tiền lên trên giao diện
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">subTotalEl</span>.<span style="color:#a6e22e">innerText</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">convertMoney</span>(<span style="color:#a6e22e">totalMoney</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">vatEl</span>.<span style="color:#a6e22e">innerText</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">convertMoney</span>(<span style="color:#a6e22e">totalMoney</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">0.05</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">totalEle</span>.<span style="color:#a6e22e">innerText</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">convertMoney</span>(<span style="color:#a6e22e">totalMoney</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">1.05</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Đầu tiên thì mình sẽ truy cập vào các thành phần, nơi mà chứa các loại tiền hiển thị bên trên giao diện, để tiếp theo khi chúng ta tính toán được các loại tiền sẽ cập nhật nội dung cho các thành phần đó</p>
+<p>Để cập nhật tổng tiền cho giỏ hàng, mình đã định nghĩa function <strong>updateTotalMoney()</strong> và truyền vào <strong>arr</strong> (chính là danh sách sản phẩm mình muốn tính tiền)</p>
+<p>Ở trong function <strong>updateTotalMoney()</strong> chúng ta sẽ tiến hành xử lý như thế nào?</p>
+<p>Ban đầu chúng ta định nghĩa biến <strong>totalMoney = 0</strong> (đây chính là giá trị <strong>Subtotal</strong>). Tiếp đến sử dụng <strong>vòng lặp for</strong> qua mảng arr. Với mỗi vòng lặp (tức là mỗi sản phẩm) chúng ta sẽ lấy <strong>count (số lượng sản phẩm) * price (giá mỗi sản phẩm)</strong> được kết quả bao nhiêu thì cộng dồn với gái trị <strong>totalMoney</strong></p>
+<p>Cuối cùng, chúng ta sẽ cập nhật các giá trị tương ứng lên trên giao diện dựa vào công thức đã được tính toán ban đầu</p>
+<p>OK, thế là xong phần định nghĩa function <strong>updateTotalMoney</strong>, tiếp theo là gọi ra, câu hỏi bây giờ là gọi ra ở đâu và gọi ra khi nào?</p>
+<p>Thì khi trang web vừa load xong, thì ngoài việc hiển thị các sản phẩm, cập nhật số lượng sản phẩm có trong giỏ hàng thì đồng thời chúng ta cũng tiến hành cập nhật tổng tiền cho nó. Tức là trong function <strong>renderUI()</strong> chúng ta sẽ gọi function <strong>updateTotalMoney()</strong> vừa định nghĩa ở trên</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">renderUI</span>(<span style="color:#a6e22e">arr</span>) {
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Cập nhật số lượng sản phẩm trong cart
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    ...
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Cập nhật tổng tiền
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">updateTotalMoney</span>(<span style="color:#a6e22e">arr</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Kiểm tra mảng rỗng
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    ...
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Vòng lặp for
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    ...
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Bây giờ chúng ta cùng xem kết quả trên giao diện nào 😆</p>
+<p><img loading="lazy" src="https://media.techmaster.vn/api/static/9479/c2kv2pk51codum1dseng" alt="cập nhật tổng tiền cho giỏ hàng"  />
+</p>
+<hr>
+<p>Chức năng cuối cùng dự án này, chính là <strong>áp dụng mã giảm giá</strong> vào giỏ hàng</p>
+<p>Mua hàng mà có mã giảm giá thì ai mà không thích chứ 😆😆</p>
+<h2 id="áp-dụng-mã-giảm-giá">Áp dụng mã giảm giá<a hidden class="anchor" aria-hidden="true" href="#áp-dụng-mã-giảm-giá">#</a></h2>
+<p>Để áp dụng được mã giảm giá, chúng ta cần có danh sách các mã giảm giá có hiệu lực</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#75715e">// Danh sách promotion code (Mã giảm giá)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">promotionCode</span> <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">A</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">10</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">B</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">20</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">C</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">30</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">D</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">40</span>,
+</span></span><span style="display:flex;"><span>};
+</span></span></code></pre></div><p>Mã giảm giá mình sẽ lưu trong object <strong>promotionCode</strong> : Với <strong>key &ldquo;A&rdquo;</strong> giảm <strong>10%</strong>, <strong>key &ldquo;B&rdquo;</strong> giảm <strong>20%</strong>, &hellip;</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#75715e">// Kiểm tra mã giảm giá
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">inputPromotion</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">querySelector</span>(<span style="color:#e6db74">&#39;#promo-code&#39;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">checkPromotion</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">value</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">inputPromotion</span>.<span style="color:#a6e22e">value</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">promotionCode</span>[<span style="color:#a6e22e">value</span>]) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">promotionCode</span>[<span style="color:#a6e22e">value</span>];
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Ở trên mình định nghĩa function <strong>checkPromotion()</strong>, mục đích của function này là kiểm tra xem giá trị mã giảm giá trong ô input có chính xác hay không? Nếu chính xác thì sẽ trả về % được giảm, nếu không thì trả về 0 (không được giảm giá)</p>
+<p>Tiếp đến khi chúng ta cập nhật tổng tiền cho đơn hàng, cần bổ sung thêm trường hợp có mã giảm giá. Bây giờ phải điều chính lại công thức 1 tí rồi</p>
+<ul>
+<li>Subtotal = Số lượng * Giá tiền từng sản phẩm</li>
+<li>VAT = Subtotal * 5%</li>
+<li>Discount = Subtotal * % được giảm</li>
+<li>Total = Subtotal + VAT - Discount</li>
+</ul>
+<p>Ok, bây giờ áp dụng vào function <strong>updateTotalMoney()</strong> thôi nào</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">discount</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">querySelector</span>(<span style="color:#e6db74">&#39;.discount&#39;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">discountEle</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">querySelector</span>(<span style="color:#e6db74">&#39;.discount span&#39;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Cập nhật tổng tiền
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">updateTotalMoney</span>(<span style="color:#a6e22e">arr</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Tính tổng tiền cart
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">totalMoney</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">discountMoney</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> <span style="color:#f92672">&lt;</span> <span style="color:#a6e22e">arr</span>.<span style="color:#a6e22e">length</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">p</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">arr</span>[<span style="color:#a6e22e">i</span>];
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">totalMoney</span> <span style="color:#f92672">+=</span> <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">count</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">price</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Có mã giảm giá hay không?
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// Mã giảm giá có hợp lệ hay không?
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">data</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">checkPromotion</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">data</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">discountMoney</span> <span style="color:#f92672">=</span> (<span style="color:#a6e22e">totalMoney</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">data</span>) <span style="color:#f92672">/</span> <span style="color:#ae81ff">100</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">discount</span>.<span style="color:#a6e22e">classList</span>.<span style="color:#a6e22e">remove</span>(<span style="color:#e6db74">&#39;hide&#39;</span>);
+</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">discount</span>.<span style="color:#a6e22e">classList</span>.<span style="color:#a6e22e">add</span>(<span style="color:#e6db74">&#39;hide&#39;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Cập nhật tiền lên trên giao diện
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">subTotalEl</span>.<span style="color:#a6e22e">innerText</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">convertMoney</span>(<span style="color:#a6e22e">totalMoney</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">vatEl</span>.<span style="color:#a6e22e">innerText</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">convertMoney</span>(<span style="color:#a6e22e">totalMoney</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">0.05</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">discountEle</span>.<span style="color:#a6e22e">innerText</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">convertMoney</span>(<span style="color:#a6e22e">discountMoney</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">totalEle</span>.<span style="color:#a6e22e">innerText</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">convertMoney</span>(<span style="color:#a6e22e">totalMoney</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">1.05</span> <span style="color:#f92672">-</span> <span style="color:#a6e22e">discountMoney</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Sau khi cập nhật lại function <strong>updateTotalMoney()</strong> mình có bổ sung thêm biến <strong>discountMoney = 0</strong> (tổng tiền giảm giá)</p>
+<p>Tiếp đến kiểm tra xem mã giảm giá có hiệu lực hay không bằng cách gọi function <strong>checkPromotion()</strong>. Vì function này trả về giá trị % được giảm (nếu có), nên mình có lưu vào biến <strong>data</strong> để có thể sử dụng về sau</p>
+<p>Tiếp theo, nếu <strong>data</strong> có giá trị (tức là mã giảm giá có hiệu lực). Lúc này mình sẽ tính toán số tiền được giảm dựa theo công thức ở trên. Đồng thời sẽ hiển thị <strong>component discount</strong> lên để người dùng nhìn thấy (mặc định ban đầu là ẩn). Trường hợp mã giảm giá không chính xác, thì chỉ việc ẩn <strong>component discount</strong> đi thôi</p>
+<p>Cuối cùng là lắng nghe sự kiện khi người dùng click vào button để áp dụng mã giảm giá</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">btnPromotion</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">querySelector</span>(<span style="color:#e6db74">&#39;.promotion button&#39;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">btnPromotion</span>.<span style="color:#a6e22e">addEventListener</span>(<span style="color:#e6db74">&#39;click&#39;</span>, <span style="color:#66d9ef">function</span> () {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">updateTotalMoney</span>(<span style="color:#a6e22e">products</span>);
+</span></span><span style="display:flex;"><span>});
+</span></span></code></pre></div><p>Ở đây khi nút &quot; <strong>Áp dụng mã giảm giá được kích hoạt</strong>&quot;, đơn giản là chúng ta gọi lại function <strong>updateTotalMoney()</strong> để nó tính toán lại toàn bộ các giá trị tiền trong trường hợp mã giảm giá có đúng hoặc không</p>
+<p>Rồi cùng xem kết nào</p>
+<p><img loading="lazy" src="https://media.techmaster.vn/api/static/9479/c2kvh5k51codum1dseo0" alt="áp dụng mã giảm giá"  />
+</p>
+<p>Ở hình ảnh trên mình đã áp dụng thành công mã giảm giá &ldquo;A&rdquo; và được giảm 10% rồi đó 😍</p>
+<hr>
+<p>Source code của phần này mình để ở đây nhé : <a href="https://github.com/buihien0109/shopping-cart-javascript/tree/master/shopping-cart-part-2">https://github.com/buihien0109/shopping-cart-javascript/tree/master/shopping-cart-part-2</a></p>
+<blockquote>
+<p>Các bạn có thể tham khảo thêm khóa học này nhé : <a href="https://techmaster.vn/khoa-hoc/ev5/javascript-can-ban-tong-hop-12-game-huyen-thoai">https://techmaster.vn/khoa-hoc/ev5/javascript-can-ban-tong-hop-12-game-huyen-thoai</a></p>
+<p>Khóa học Web Frontend - <a href="https://techmaster.vn/lo-trinh/front-end">tại đây</a></p>
+</blockquote>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://buihien.org/tags/frontend/">FrontEnd</a></li>
+      <li><a href="https://buihien.org/tags/javascript/">Javascript</a></li>
+      <li><a href="https://buihien.org/tags/web/">Web</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2023 <a href="https://buihien.org">Tech&#39;s Blog</a></span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

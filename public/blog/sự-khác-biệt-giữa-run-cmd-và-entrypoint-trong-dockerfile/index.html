@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Sự khác biệt giữa RUN, CMD và ENTRYPOINT trong Dockerfile | Tech&#39;s Blog</title>
+<meta name="keywords" content="Devops, Docker">
+<meta name="description" content="Trong Dockerfile chúng ta thường xuyên bắt gặp các instructions như CMD, RUN, ENTRYPOINT. Thoạt nhìn, chúng đều được sử dụng để chỉ định và thực thi các lệnh ...">
+<meta name="author" content="">
+<link rel="canonical" href="https://buihien.org/blog/s%E1%BB%B1-kh%C3%A1c-bi%E1%BB%87t-gi%E1%BB%AFa-run-cmd-v%C3%A0-entrypoint-trong-dockerfile/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.min.a72801f0f40a8d7f71aa1cafd1c2f2a993a1f26ca1cfd38fdba65d5b9b0f08a0.css" integrity="sha256-pygB8PQKjX9xqhyv0cLyqZOh8myhz9OP26ZdW5sPCKA=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.min.b95bacdc39e37a332a9f883b1e78be4abc1fdca2bc1f2641f55e3cd3dabd4d61.js" integrity="sha256-uVus3DnjejMqn4g7Hni&#43;Srwf3KK8HyZB9V4809q9TWE="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://buihien.org/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://buihien.org/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://buihien.org/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://buihien.org/apple-touch-icon.png">
+<link rel="mask-icon" href="https://buihien.org/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="Sự khác biệt giữa RUN, CMD và ENTRYPOINT trong Dockerfile" />
+<meta property="og:description" content="Trong Dockerfile chúng ta thường xuyên bắt gặp các instructions như CMD, RUN, ENTRYPOINT. Thoạt nhìn, chúng đều được sử dụng để chỉ định và thực thi các lệnh ..." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://buihien.org/blog/s%E1%BB%B1-kh%C3%A1c-bi%E1%BB%87t-gi%E1%BB%AFa-run-cmd-v%C3%A0-entrypoint-trong-dockerfile/" />
+<meta property="og:image" content="https://buihien.org/blog/docker/docker-run-cmd-endpoint.png" /><meta property="article:section" content="blog" />
+
+
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://buihien.org/blog/docker/docker-run-cmd-endpoint.png" />
+<meta name="twitter:title" content="Sự khác biệt giữa RUN, CMD và ENTRYPOINT trong Dockerfile"/>
+<meta name="twitter:description" content="Trong Dockerfile chúng ta thường xuyên bắt gặp các instructions như CMD, RUN, ENTRYPOINT. Thoạt nhìn, chúng đều được sử dụng để chỉ định và thực thi các lệnh ..."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Blogs",
+      "item": "https://buihien.org/blog/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "Sự khác biệt giữa RUN, CMD và ENTRYPOINT trong Dockerfile",
+      "item": "https://buihien.org/blog/s%E1%BB%B1-kh%C3%A1c-bi%E1%BB%87t-gi%E1%BB%AFa-run-cmd-v%C3%A0-entrypoint-trong-dockerfile/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Sự khác biệt giữa RUN, CMD và ENTRYPOINT trong Dockerfile",
+  "name": "Sự khác biệt giữa RUN, CMD và ENTRYPOINT trong Dockerfile",
+  "description": "Trong Dockerfile chúng ta thường xuyên bắt gặp các instructions như CMD, RUN, ENTRYPOINT. Thoạt nhìn, chúng đều được sử dụng để chỉ định và thực thi các lệnh ...",
+  "keywords": [
+    "Devops", "Docker"
+  ],
+  "articleBody": "Tổng quan Trong Dockerfile chúng ta thường xuyên bắt gặp các instructions như CMD, RUN, ENTRYPOINT. Thoạt nhìn, chúng đều được sử dụng để chỉ định và thực thi các lệnh. Nhưng sự khác biệt giữa chúng là gì? Trong bài viết này chúng ta sẽ cùng tìm hiểu về các instructions này\nTham khảo Lộ trình DevOps 43 buổi - học trực tuyến có tương tác toàn quốc.\nChúng ta có thể hiểu ngắn gọn là:\nRUN thực thi các lệnh command line và một layer mới. Ví dụ: thường được sử dụng để cài đặt các gói phần mềm. CMD thực hiện lệnh mặc định khi chúng ta khởi tạo container từ image, lệnh mặc định này có thể được ghi đè từ dòng lệnh khi khởi tại container. ENTRYPOINT khá giống CMD đều dùng để chạy khi khởi tạo container, nhưng ENTRYPOINT không thể ghi đè từ dòng lệnh khi khi khởi tại container. Shell and Exec forms Cả ba lệnh (RUN, CMD và ENTRYPOINT) có thể được chỉ định ở dạng shell form hoặc dạng exec form.\nShell form Ví dụ:\nRUN apt-get install ping CMD echo \"Xin chào các bạn\" ENTRYPOINT echo \"Xin chào các bạn\" Khi instruction được thực thi trong shell form nó sẽ gọi xử lý /bin/sh -c bên dưới và xử lý shell xảy ra.\nVí dụ chúng ta có Dockerfile như sau\nFROM ubuntu:latest ENV name Nguyễn Văn A ENTRYPOINT echo \"Xin chào ${name}\" Bây giờ thử build image\ndocker build -t hello:latest . Tạo một container từ image vừa build\ndocker run --name hello-example hello:latest Kết quả chúng ta đạt được là\nXin chào Nguyễn Văn A Biến ${name} được thay thế bằng giá trị set trong ENV\nExec form Exec form được sử dụng nhiều hơn với CMD và ENTRYPOINT\n[\"executable\", \"param1\", \"param2\", ...] Ví dụ:\nRUN [\"apt-get\", \"install\", \"ping\"] CMD [\"/bin/echo\", \"Xin chào các bạn\"] ENTRYPOINT [\"/bin/echo\", \"Xin chào các bạn\"] Khi lệnh thực thi ở dạng exec form, nó gọi thực thi trực tiếp và xử lý shell không xảy ra.\nVí dụ: chúng ta có Dockerfile sau\nFROM ubuntu:latest ENV name Nguyễn Văn A ENTRYPOINT [\"/bin/echo\", \"Xin chào ${name}\"] Chúng ta thử build image mới và khởi tạo một container từ image vừa tạo này\nVà đây là kết quả\nXin chào ${name} Biến $name không được thay thế\nVậy làm thế nào thể run bash\nNếu muốn run bash thì ta sử dụng exec form với /bin/bash như một executable. Khi đó xử lý shell bình thường sẽ được thực thi. Chúng ta sẽ thực hiện như sau\nVí dụ\nFROM ubuntu:latest ENV name Nguyễn Văn A ENTRYPOINT [\"/bin/bash\", \"-c\", \"echo Xin chào ${name}\"] Ở đây chúng ta sử dụng executable /bin/bash\nKết quả đạt được như sau\nXin chào Nguyễn Văn A Khi container chạy output sẽ in ra biến ${name}\nRUN RUN được thực thi trong quá trình build. Khi ta build một Docker image, Docker sẽ đọc các câu lệnh trong chỉ dẫn RUN và build tới một layer mới trong image sử dụng.\nThường thì ta sẽ thấy nhiều lệnh RUN trong dockerfile. RUN có 2 cấu trúc\n- RUN \u003c command \u003e (shell form) - RUN [\"executable\", \"param1\", \"param2\"] (exec form) Ví dụ: Cài đặt nhiều package khi sử dụng câu lệnh RUN\nRUN apt-get update \u0026\u0026 apt-get install -y \\ ping \\ nano \\ git \\ Trong shell form, ta có thể sử dụng thêm ký tự \\ để chia các câu lệnh dài thành các câu lệnh ngắn hơn trên một dòng\nCMD CMD cho phép ta set default command, có nghĩa là command này sẽ chỉ được chạy khi run container mà không chỉ định một command.\nNếu docker run với một command thì default command sẽ được ignore. Nếu dockerfile có nhiều hơn một lệnh CMD thì tất cả sẽ bị ignore ngoại trừ lệnh CMD cuối cùng.\nCMD có 3 dạng form:\n- CMD [\"executable\", \"param1\", \"param2\"] (exec form) - CMD [\"param1\", \"param2\"] (đặt các tham số mặc định cho ENTRYPOINT ở dạng exec form) - CMD command param1 param2 (shell form) Cách thứ 2 được sử dụng cùng với ENTRYPOINT trong exec form. Nó set default parameters được thêm vào ENTRYPOINT nếu container chạy mà không truyền đối số nào, ngược lại nó sẽ bị ignore. Ví dụ sử dụng đoạn mã dưới trong Dockerfile\nFROM ubuntu:latest CMD echo \"Xin chào các bạn\" Chúng ta build image từ Dockerfile và khởi tạo container từ image vừa tạo docker run -it sẽ ra kết quả là:\nXin chào các bạn nhưng khi chạy docker run -it /bin/bash, CMD sẽ bị ignored và bash sẽ được thay thế, output:\nKết quả không có gì được in ra cả.\nENTRYPOINT Lệnh ENTRYPOINT cho phép ta cấu hình container sẽ chạy dưới dạng thực thi. Nó tương tự như CMD, vì nó cũng cho phép ta chỉ định một lệnh với các tham số. Sự khác biệt là lệnh ENTRYPOINT và các tham số không bị ignore khi Docker container chạy.\nENTRYPOINT có 2 dạng form:\n- ENTRYPOINT [\"executable\", \"param1\", \"param2\"] (exec form) - ENTRYPOINT command param1 param2 (shell form) Exec form của ENTRYPOINT cho phép ta đặt các lệnh và tham số và sau đó sử dụng một trong hai dạng : một là CMD để đặt các tham số bổ sung, hai là các đối số ENTRYPOINT (luôn được sử dụng), trong khi các đối số CMD có thể được ghi đè bằng các tham số dòng lệnh được cung cấp khi Docker container chạy. Ví dụ sử dụng đoạn mã dưới trong dockerfile\nFROM ubuntu:latest ENTRYPOINT [\"/bin/echo\", \"Xin chào\"] CMD [\"các bạn\"] Build image và chạy thử câu lệnh sau docker run -it sẽ cho kết quả là:\nXin chào các bạn Bây giờ lại chạy với lệnh sau docker run -it Nguyễn Văn A sẽ cho kết quả là:\nXin chào Nguyễn Văn A Shell form của ENTRYPOINT ignore tất CMD và các tham số dòng lệnh\nTổng kết RUN được sử dụng để cài đặt các package, thực thi câu lệnh tạo ra layer mới của image.\nENTRYPOINT và CMD sử dụng khi ta cần một lệnh cần được thực thi. Ngoài ra, hãy sử dụng CMD kết hợp với ENTRYPOINT nếu ta cần cung cấp thêm các đối số mặc định có thể được ghi đè từ dòng lệnh khi docker container chạy.\n",
+  "wordCount" : "1079",
+  "inLanguage": "en",
+  "image":"https://buihien.org/blog/docker/docker-run-cmd-endpoint.png","datePublished": "0001-01-01T00:00:00Z",
+  "dateModified": "0001-01-01T00:00:00Z",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://buihien.org/blog/s%E1%BB%B1-kh%C3%A1c-bi%E1%BB%87t-gi%E1%BB%AFa-run-cmd-v%C3%A0-entrypoint-trong-dockerfile/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Tech's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://buihien.org/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header sticky-header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://buihien.org" accesskey="h" title="Tech&#39;s Blog (Alt + H)">Tech&#39;s Blog</a>
+            <span class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </span>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://buihien.org/" title="Home">
+                    <span>Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://buihien.org/blog" title="Blog">
+                    <span>Blog</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://buihien.org/tags" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://buihien.org/search" title="Search (Alt &#43; /)" accesskey=/>
+                    <span>Search</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://buihien.org">Home</a>&nbsp;»&nbsp;<a href="https://buihien.org/blog/">Blogs</a></div>
+    <h1 class="post-title">
+      Sự khác biệt giữa RUN, CMD và ENTRYPOINT trong Dockerfile
+    </h1>
+    <div class="post-description">
+      Trong Dockerfile chúng ta thường xuyên bắt gặp các instructions như CMD, RUN, ENTRYPOINT. Thoạt nhìn, chúng đều được sử dụng để chỉ định và thực thi các lệnh ...
+    </div>
+    <div class="post-meta">
+
+
+27/12/2022
+
+</div>
+  </header> 
+<figure class="entry-cover"><img loading="lazy" src="https://buihien.org/blog/docker/docker-run-cmd-endpoint.png" alt="">
+        
+</figure><div class="toc">
+    <details >
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">‎ Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#t%e1%bb%95ng-quan" aria-label="Tổng quan">Tổng quan</a></li>
+                <li>
+                    <a href="#shell-and-exec-forms" aria-label="Shell and Exec forms">Shell and Exec forms</a><ul>
+                        
+                <li>
+                    <a href="#shell-form" aria-label="Shell form">Shell form</a></li>
+                <li>
+                    <a href="#exec-form" aria-label="Exec form">Exec form</a><ul>
+                        
+                <li>
+                    <a href="#run" aria-label="RUN"><strong>RUN</strong></a></li>
+                <li>
+                    <a href="#cmd" aria-label="CMD"><strong>CMD</strong></a></li>
+                <li>
+                    <a href="#entrypoint" aria-label="ENTRYPOINT"><strong>ENTRYPOINT</strong></a></li>
+                <li>
+                    <a href="#t%e1%bb%95ng-k%e1%ba%bft" aria-label="Tổng kết"><strong>Tổng kết</strong></a>
+                </li>
+            </ul>
+            </li>
+            </ul>
+            </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><h2 id="tổng-quan">Tổng quan<a hidden class="anchor" aria-hidden="true" href="#tổng-quan">#</a></h2>
+<p>Trong Dockerfile chúng ta thường xuyên bắt gặp các instructions như CMD, RUN, ENTRYPOINT. Thoạt nhìn, chúng đều được sử dụng để chỉ định và thực thi các lệnh. Nhưng sự khác biệt giữa chúng là gì? Trong bài viết này chúng ta sẽ cùng tìm hiểu về các instructions này</p>
+<blockquote>
+<p>Tham khảo <a href="https://devops.techmaster.vn/">Lộ trình DevOps 43 buổi</a> - học trực tuyến có tương tác toàn quốc.</p>
+</blockquote>
+<p>Chúng ta có thể hiểu ngắn gọn là:</p>
+<ul>
+<li><strong>RUN</strong> thực thi các lệnh command line và một layer mới. Ví dụ: thường được sử dụng để cài đặt các gói phần mềm.</li>
+<li><strong>CMD</strong> thực hiện lệnh mặc định khi chúng ta khởi tạo container từ image, lệnh mặc định này có thể được ghi đè từ dòng lệnh khi khởi tại container.</li>
+<li><strong>ENTRYPOINT</strong> khá giống CMD đều dùng để chạy khi khởi tạo container, nhưng ENTRYPOINT không thể ghi đè từ dòng lệnh khi khi khởi tại container.</li>
+</ul>
+<h2 id="shell-and-exec-forms">Shell and Exec forms<a hidden class="anchor" aria-hidden="true" href="#shell-and-exec-forms">#</a></h2>
+<p>Cả ba lệnh (RUN, CMD và ENTRYPOINT) có thể được chỉ định ở dạng shell form hoặc dạng exec form.</p>
+<h3 id="shell-form">Shell form<a hidden class="anchor" aria-hidden="true" href="#shell-form">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>&lt;instruction&gt; &lt;command&gt;
+</span></span></code></pre></div><p>Ví dụ:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>RUN apt-get install ping
+</span></span><span style="display:flex;"><span>CMD echo <span style="color:#e6db74">&#34;Xin chào các bạn&#34;</span>
+</span></span><span style="display:flex;"><span>ENTRYPOINT echo <span style="color:#e6db74">&#34;Xin chào các bạn&#34;</span>
+</span></span></code></pre></div><p>Khi instruction được thực thi trong shell form nó sẽ gọi xử lý <strong>/bin/sh -c</strong> bên dưới và xử lý shell xảy ra.</p>
+<p>Ví dụ chúng ta có Dockerfile như sau</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>FROM ubuntu:latest
+</span></span><span style="display:flex;"><span>ENV name Nguyễn Văn A
+</span></span><span style="display:flex;"><span>ENTRYPOINT echo <span style="color:#e6db74">&#34;Xin chào </span><span style="color:#e6db74">${</span>name<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+</span></span></code></pre></div><p>Bây giờ thử build image</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker build -t hello:latest .
+</span></span></code></pre></div><p>Tạo một container từ image vừa build</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker run --name hello-example hello:latest
+</span></span></code></pre></div><p>Kết quả chúng ta đạt được là</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>Xin chào Nguyễn Văn A
+</span></span></code></pre></div><p>Biến ${name} được thay thế bằng giá trị set trong ENV</p>
+<h3 id="exec-form">Exec form<a hidden class="anchor" aria-hidden="true" href="#exec-form">#</a></h3>
+<p>Exec form được sử dụng nhiều hơn với <strong>CMD</strong> và <strong>ENTRYPOINT</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>&lt;instruction&gt; <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;executable&#34;</span>, <span style="color:#e6db74">&#34;param1&#34;</span>, <span style="color:#e6db74">&#34;param2&#34;</span>, ...<span style="color:#f92672">]</span>
+</span></span></code></pre></div><p>Ví dụ:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>RUN <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;apt-get&#34;</span>, <span style="color:#e6db74">&#34;install&#34;</span>, <span style="color:#e6db74">&#34;ping&#34;</span><span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>CMD <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;/bin/echo&#34;</span>, <span style="color:#e6db74">&#34;Xin chào các bạn&#34;</span><span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>ENTRYPOINT <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;/bin/echo&#34;</span>, <span style="color:#e6db74">&#34;Xin chào các bạn&#34;</span><span style="color:#f92672">]</span>
+</span></span></code></pre></div><p>Khi lệnh thực thi ở dạng exec form, nó gọi thực thi trực tiếp và xử lý shell không xảy ra.</p>
+<p>Ví dụ: chúng ta có Dockerfile sau</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>FROM ubuntu:latest
+</span></span><span style="display:flex;"><span>ENV name Nguyễn Văn A
+</span></span><span style="display:flex;"><span>ENTRYPOINT <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;/bin/echo&#34;</span>, <span style="color:#e6db74">&#34;Xin chào </span><span style="color:#e6db74">${</span>name<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">]</span>
+</span></span></code></pre></div><p>Chúng ta thử build image mới và khởi tạo một container từ image vừa tạo này</p>
+<p>Và đây là kết quả</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>Xin chào <span style="color:#e6db74">${</span>name<span style="color:#e6db74">}</span>
+</span></span></code></pre></div><p>Biến $name không được thay thế</p>
+<p><strong>Vậy làm thế nào thể run bash</strong></p>
+<p>Nếu muốn run <em>bash</em> thì ta sử dụng exec form với <em>/bin/bash</em> như một executable. Khi đó xử lý shell bình thường sẽ được thực thi. Chúng ta sẽ thực hiện như sau</p>
+<p>Ví dụ</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>FROM ubuntu:latest
+</span></span><span style="display:flex;"><span>ENV name Nguyễn Văn A
+</span></span><span style="display:flex;"><span>ENTRYPOINT <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;/bin/bash&#34;</span>, <span style="color:#e6db74">&#34;-c&#34;</span>, <span style="color:#e6db74">&#34;echo Xin chào </span><span style="color:#e6db74">${</span>name<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">]</span>
+</span></span></code></pre></div><p>Ở đây chúng ta sử dụng executable <strong>/bin/bash</strong></p>
+<p>Kết quả đạt được như sau</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>Xin chào Nguyễn Văn A
+</span></span></code></pre></div><p>Khi container chạy output sẽ in ra biến ${name}</p>
+<h4 id="run"><strong>RUN</strong><a hidden class="anchor" aria-hidden="true" href="#run">#</a></h4>
+<p>RUN được thực thi trong quá trình build. Khi ta build một Docker image, Docker sẽ đọc các câu lệnh trong chỉ dẫn RUN và build tới một layer mới trong image sử dụng.</p>
+<p>Thường thì ta sẽ thấy nhiều lệnh RUN trong dockerfile. RUN có 2 cấu trúc</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>- RUN &lt; command &gt; <span style="color:#f92672">(</span>shell form<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>- RUN <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;executable&#34;</span>, <span style="color:#e6db74">&#34;param1&#34;</span>, <span style="color:#e6db74">&#34;param2&#34;</span><span style="color:#f92672">]</span>  <span style="color:#f92672">(</span>exec form<span style="color:#f92672">)</span> 
+</span></span></code></pre></div><p>Ví dụ: Cài đặt nhiều package khi sử dụng câu lệnh RUN</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>RUN apt-get update <span style="color:#f92672">&amp;&amp;</span> apt-get install -y <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  ping <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  nano <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  git <span style="color:#ae81ff">\
+</span></span></span></code></pre></div><p>Trong shell form, ta có thể sử dụng thêm ký tự \ để chia các câu lệnh dài thành các câu lệnh ngắn hơn trên một dòng</p>
+<h4 id="cmd"><strong>CMD</strong><a hidden class="anchor" aria-hidden="true" href="#cmd">#</a></h4>
+<p>CMD cho phép ta set default command, có nghĩa là command này sẽ chỉ được chạy khi run container mà không chỉ định một command.</p>
+<p>Nếu docker run với một command thì default command sẽ được ignore. Nếu dockerfile có nhiều hơn một lệnh CMD thì tất cả sẽ bị ignore ngoại trừ lệnh CMD cuối cùng.</p>
+<p>CMD có 3 dạng form:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>- CMD <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;executable&#34;</span>, <span style="color:#e6db74">&#34;param1&#34;</span>, <span style="color:#e6db74">&#34;param2&#34;</span><span style="color:#f92672">]</span>   <span style="color:#f92672">(</span>exec form<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>- CMD <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;param1&#34;</span>, <span style="color:#e6db74">&#34;param2&#34;</span><span style="color:#f92672">]</span>  <span style="color:#f92672">(</span>đặt các tham số mặc định cho ENTRYPOINT ở dạng exec form<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>- CMD command param1 param2   <span style="color:#f92672">(</span>shell form<span style="color:#f92672">)</span> 
+</span></span></code></pre></div><p>Cách thứ 2 được sử dụng cùng với ENTRYPOINT trong exec form. Nó set default parameters được thêm vào ENTRYPOINT nếu container chạy mà không truyền đối số nào, ngược lại nó sẽ bị ignore. Ví dụ sử dụng đoạn mã dưới trong Dockerfile</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>FROM ubuntu:latest
+</span></span><span style="display:flex;"><span>CMD echo <span style="color:#e6db74">&#34;Xin chào các bạn&#34;</span>
+</span></span></code></pre></div><p>Chúng ta build image từ Dockerfile và khởi tạo container từ image vừa tạo <strong>docker run -it &lt;tên_image&gt;</strong> sẽ ra kết quả là:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>Xin chào các bạn
+</span></span></code></pre></div><p>nhưng khi chạy <strong>docker run -it &lt;tên_image&gt; /bin/bash</strong>, CMD sẽ bị ignored và bash sẽ được thay thế, output:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"></code></pre></div><p>Kết quả không có gì được in ra cả.</p>
+<h4 id="entrypoint"><strong>ENTRYPOINT</strong><a hidden class="anchor" aria-hidden="true" href="#entrypoint">#</a></h4>
+<p>Lệnh ENTRYPOINT cho phép ta cấu hình container sẽ chạy dưới dạng thực thi. Nó tương tự như CMD, vì nó cũng cho phép ta chỉ định một lệnh với các tham số. Sự khác biệt là lệnh ENTRYPOINT và các tham số không bị ignore khi Docker container chạy.</p>
+<p>ENTRYPOINT có 2 dạng form:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>- ENTRYPOINT <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;executable&#34;</span>, <span style="color:#e6db74">&#34;param1&#34;</span>, <span style="color:#e6db74">&#34;param2&#34;</span><span style="color:#f92672">]</span> <span style="color:#f92672">(</span>exec form<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>- ENTRYPOINT command param1 param2 <span style="color:#f92672">(</span>shell form<span style="color:#f92672">)</span> 
+</span></span></code></pre></div><p><strong>Exec form</strong> của ENTRYPOINT cho phép ta đặt các lệnh và tham số và sau đó sử dụng một trong hai dạng : một là CMD để đặt các tham số bổ sung, hai là các đối số ENTRYPOINT (luôn được sử dụng), trong khi các đối số CMD có thể được ghi đè bằng các tham số dòng lệnh được cung cấp khi Docker container chạy. Ví dụ sử dụng đoạn mã dưới trong dockerfile</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>FROM ubuntu:latest
+</span></span><span style="display:flex;"><span>ENTRYPOINT <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;/bin/echo&#34;</span>, <span style="color:#e6db74">&#34;Xin chào&#34;</span><span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>CMD <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;các bạn&#34;</span><span style="color:#f92672">]</span>
+</span></span></code></pre></div><p>Build image và chạy thử câu lệnh sau <strong>docker run -it &lt;tên_image&gt;</strong> sẽ cho kết quả là:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>Xin chào các bạn
+</span></span></code></pre></div><p>Bây giờ lại chạy với lệnh sau <strong>docker run -it &lt;tên_image&gt; Nguyễn Văn A</strong> sẽ cho kết quả là:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>Xin chào Nguyễn Văn A
+</span></span></code></pre></div><p><strong>Shell form</strong> của ENTRYPOINT ignore tất CMD và các tham số dòng lệnh</p>
+<h4 id="tổng-kết"><strong>Tổng kết</strong><a hidden class="anchor" aria-hidden="true" href="#tổng-kết">#</a></h4>
+<p>RUN được sử dụng để cài đặt các package, thực thi câu lệnh tạo ra layer mới của image.</p>
+<p>ENTRYPOINT và CMD sử dụng khi ta cần một lệnh cần được thực thi. Ngoài ra, hãy sử dụng CMD kết hợp với ENTRYPOINT nếu ta cần cung cấp thêm các đối số mặc định có thể được ghi đè từ dòng lệnh khi docker container chạy.</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://buihien.org/tags/devops/">Devops</a></li>
+      <li><a href="https://buihien.org/tags/docker/">Docker</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2023 <a href="https://buihien.org">Tech&#39;s Blog</a></span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

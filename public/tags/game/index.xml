@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Game on Tech&#39;s Blog</title>
+    <link>https://buihien.org/tags/game/</link>
+    <description>Recent content in Game on Tech&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language><atom:link href="https://buihien.org/tags/game/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Thử tài cào phím với Typing Game - Javascript (phần 1)</title>
+      <link>https://buihien.org/blog/thu-tai-cao-phim-voi-typing-game-javascript-phan-1/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://buihien.org/blog/thu-tai-cao-phim-voi-typing-game-javascript-phan-1/</guid>
+      <description>Để phục vụ cho nhu cầu cào phím của anh em, thì bài viết này chúng ta sẽ cùng nhau làm thử một ứng dụng hay nói mĩ miều hơn là một game để luyện tập gõ phím 😁. Mình sẽ gọi nôm na là Typing Game cho nó Tây chút chứ không có gì đâu.</description>
+    </item>
+    
+    <item>
+      <title>Thử tài cào phím với Typing Game - Javascript (phần 2)</title>
+      <link>https://buihien.org/blog/thu-tai-cao-phim-voi-typing-game-javascript-phan-2/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://buihien.org/blog/thu-tai-cao-phim-voi-typing-game-javascript-phan-2/</guid>
+      <description>Chào mọi người, ở bài viết trước mình đã hướng dẫn các bạn render các từ trong một đoạn văn bản ra ngoài giao diện, đồng thời chúng ta cũng có thể chuyển đổi ngôn ngữ từ tiếng việt sang tiếng anh hoặc ngược lại nếu muốn</description>
+    </item>
+    
+    <item>
+      <title>Thử tài cào phím với Typing Game - Javascript (phần 3)</title>
+      <link>https://buihien.org/blog/thu-tai-cao-phim-voi-typing-game-javascript-phan-3/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://buihien.org/blog/thu-tai-cao-phim-voi-typing-game-javascript-phan-3/</guid>
+      <description>Trong nội dung bài viết hướng dẫn Typing Game (phần 3), mình sẽ tiếp tục làm các chức năng còn lại của Typing game bao gồm ...</description>
+    </item>
+    
+  </channel>
+</rss>
